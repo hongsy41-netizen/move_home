@@ -408,8 +408,8 @@
   .tl-key .kc .d em{font-style:normal;font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 6px;background:#f3f5fa;border:1px solid var(--line);color:var(--ink-3)}
   .tl-key .kc .t{font-size:15px;font-weight:800;margin-top:5px;letter-spacing:-.01em}
   .tl-key .kc .m{font-size:12.5px;color:var(--ink-3);margin-top:2px;line-height:1.45;word-break:keep-all}
-  .tl-key .kc.empty{border-style:dashed;background:#fafbff}
-  .tl-key .kc.empty .t{color:var(--ink-3)}
+  .tl-key .kc.off{border-style:dashed;background:#fafbff}
+  .tl-key .kc.off .t{color:var(--ink-3)}
   .tl-key .kc.move{border-color:#dfe5fb;background:linear-gradient(140deg,#fff,#eef2ff)}
   .tl-days{padding:2px 22px 18px}
   .tl-day{display:grid;grid-template-columns:82px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid #f2f4fa}
@@ -1423,7 +1423,7 @@
 
     html += '<div class="tl-key">';
     TL_KEY_DAYS.forEach(k=>{
-      html += '<div class="kc' + (k.empty ? ' empty' : '') + (k.move ? ' move' : '') + '">'
+      html += '<div class="kc' + (k.empty ? ' off' : '') + (k.move ? ' move' : '') + '">'
         + '<div class="d">' + shortDate(k.due) + ' (' + weekdayOf(k.due) + ')<em>' + relLabel(k.due, today) + '</em></div>'
         + '<div class="t">' + esc(k.t) + '</div>'
         + '<div class="m">' + esc(k.m) + '</div>'
@@ -1442,7 +1442,7 @@
       const dayItems = byDate[d] || [];
       const doneN = dayItems.filter(i=>i.done).length;
       const isMove = d === MOVE_DATE;
-      html += '<section class="tl-day' + (dayItems.length ? '' : ' empty') + (isMove ? ' move' : '') + '">'
+      html += '<section class="tl-day' + (dayItems.length ? '' : ' off') + (isMove ? ' move' : '') + '">'
         + '<div class="tl-date"><b>' + shortDate(d) + '</b><span>' + weekdayOf(d) + '요일</span>'
         +   '<em class="' + (relLabel(d, today) === '오늘' ? 'on' : '') + '">' + relLabel(d, today) + '</em></div>'
         + '<div class="tl-main">';
