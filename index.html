@@ -496,7 +496,7 @@
   /* ─────────── 설정 ─────────── */
   const MOVE_DATE = "2026-12-17";
   const STORAGE_KEY = "moving-dashboard-v1";
-  const DATA_VERSION = 4;
+  const DATA_VERSION = 5;
 
   const CATS = [
     { id:"vendor",  icon:"🔧", name:"업체·시공·설치", hint:"업체 통해 예약·진행한 항목과 추가 시공" },
@@ -520,13 +520,16 @@
       memo:"6톤, 사다리차 29만 원 포함 (총 180만) · ☎ 끝자리 2482 · 방문 시간·추가 요금 통화 확인" },
     "쾌존": { vendor:"쾌존", paidAmount:50000, remainingAmount:1200000,
       memo:"총 125만 원 (선입금 5만 / 잔금 120만)" },
-    "가구 (소파·식탁·침대)": { vendor:"리안데코", paidAmount:1000000, remainingAmount:5500000,
+    "가구 (소파·식탁·침대)": { vendor:"린다데코", paidAmount:1000000, remainingAmount:5500000,
       memo:"쇼파 250 · 식탁 149 · 침대 269 (총 717만 → 650만 할인)" },
     "커피머신 (웬두지 리타 BA)": { paidAmount:2150000, remainingAmount:0,
       memo:"215만 원 결제 완료" }
   };
   /* 이미 저장된 예전 데이터에 새로 더해 줄 항목 (사용자가 지운 항목은 되살리지 않음) */
   const SEED_V3_ADD = ["쾌존", "가구 (소파·식탁·침대)", "커피머신 (웬두지 리타 BA)"];
+  /* 업체명 정정 — 이미 저장된 항목에도 반영 */
+  const VENDOR_FIX = { "리안데코": "린다데코" };
+
   /* 메모 문구가 바뀐 항목의 예전 기본 메모 — 사용자가 직접 고친 메모는 덮어쓰지 않기 위해 */
   const OLD_MEMO = {
     "줄눈": ["업체 통해 완료"],
@@ -653,6 +656,11 @@
     const seed = defaults();
     const seedByTitle = {};
     seed.forEach(s=>{ seedByTitle[s.title] = s; });
+
+    items.forEach(it=>{
+      const fixed = VENDOR_FIX[it.vendor];
+      if(fixed) it.vendor = fixed;
+    });
 
     items.forEach(it=>{
       const s = seedByTitle[it.title];
