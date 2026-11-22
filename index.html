@@ -496,7 +496,7 @@
   /* ─────────── 설정 ─────────── */
   const MOVE_DATE = "2026-12-17";
   const STORAGE_KEY = "moving-dashboard-v1";
-  const DATA_VERSION = 3;
+  const DATA_VERSION = 4;
 
   const CATS = [
     { id:"vendor",  icon:"🔧", name:"업체·시공·설치", hint:"업체 통해 예약·진행한 항목과 추가 시공" },
@@ -511,13 +511,13 @@
     "줄눈": { paidAmount:65000, remainingAmount:585000,
       memo:"욕실 바닥 에폭시·벽면 3면 폴리·주방 실리콘 패키지 (총 65만, 잔금 보름 전 연락)" },
     "거실 무타공 TV": { vendor:"윙티비", paidAmount:0, remainingAmount:240000,
-      memo:"무타공 설치 총 24만 원" },
+      memo:"무타공 설치 총 24만 원 · ☎ 끝자리 6409" },
     "입주청소": { paidAmount:0, remainingAmount:400000,
-      memo:"총 40만 원 (업체 통해 완료)" },
+      memo:"총 40만 원 (업체 통해 완료) · ☎ 끝자리 4129" },
     "세탁기·건조기 설치": { paidAmount:0, remainingAmount:3700000,
       memo:"총 370만 원 — 워시타워 (결제 완료·잔금 구분 필요 시 수정)" },
     "이삿짐 업체 최종 확인": { vendor:"한미", paidAmount:100000, remainingAmount:1700000,
-      memo:"6톤, 사다리차 29만 원 포함 (총 180만) · 방문 시간·짐 목록·추가 요금 통화 확인" },
+      memo:"6톤, 사다리차 29만 원 포함 (총 180만) · ☎ 끝자리 2482 · 방문 시간·추가 요금 통화 확인" },
     "쾌존": { vendor:"쾌존", paidAmount:50000, remainingAmount:1200000,
       memo:"총 125만 원 (선입금 5만 / 잔금 120만)" },
     "가구 (소파·식탁·침대)": { vendor:"리안데코", paidAmount:1000000, remainingAmount:5500000,
@@ -529,11 +529,14 @@
   const SEED_V3_ADD = ["쾌존", "가구 (소파·식탁·침대)", "커피머신 (웬두지 리타 BA)"];
   /* 메모 문구가 바뀐 항목의 예전 기본 메모 — 사용자가 직접 고친 메모는 덮어쓰지 않기 위해 */
   const OLD_MEMO = {
-    "줄눈": "업체 통해 완료",
-    "거실 무타공 TV": "업체 통해 완료",
-    "입주청소": "업체 통해 완료",
-    "세탁기·건조기 설치": "도착지 배수·전원 위치 확인, 설치 기사 방문 시간 조율",
-    "이삿짐 업체 최종 확인": "방문 시간·짐 목록·추가 요금 없는지 통화로 확인"
+    "줄눈": ["업체 통해 완료"],
+    "거실 무타공 TV": ["업체 통해 완료", "무타공 설치 총 24만 원"],
+    "입주청소": ["업체 통해 완료", "총 40만 원 (업체 통해 완료)"],
+    "세탁기·건조기 설치": ["도착지 배수·전원 위치 확인, 설치 기사 방문 시간 조율"],
+    "이삿짐 업체 최종 확인": [
+      "방문 시간·짐 목록·추가 요금 없는지 통화로 확인",
+      "6톤, 사다리차 29만 원 포함 (총 180만) · 방문 시간·짐 목록·추가 요금 통화 확인"
+    ]
   };
 
   /* ─────────── 기본 체크리스트 ─────────── */
@@ -633,7 +636,7 @@
         if(p && Array.isArray(p.items)){
           const version = Number(p.v) || 1;
           const items = p.items.map(normalize);
-          if(version < 3) migrateToV3(items);
+          if(version < DATA_VERSION) applyCostSeed(items);
           state = { v:DATA_VERSION, items:items };
           if(version < DATA_VERSION) save();
           return;
@@ -644,9 +647,9 @@
     save();
   }
 
-  /* v2 이하 저장값에 실제 계약금·잔금·업체명을 채워 넣는다.
+  /* 예전 저장값에 실제 계약금·잔금·업체명을 채워 넣는다.
      사용자가 직접 넣은 값(업체명·금액·고친 메모)은 건드리지 않는다. */
-  function migrateToV3(items){
+  function applyCostSeed(items){
     const seed = defaults();
     const seedByTitle = {};
     seed.forEach(s=>{ seedByTitle[s.title] = s; });
@@ -655,12 +658,13 @@
       const s = seedByTitle[it.title];
       if(!s) return;
       const untouched = !it.vendor && !it.paidAmount && !it.remainingAmount;
-      if(!untouched) return;
-      it.vendor = s.vendor || "";
-      it.paidAmount = s.paidAmount || 0;
-      it.remainingAmount = s.remainingAmount || 0;
-      const oldMemo = OLD_MEMO[it.title];
-      if(s.memo && (!it.memo || it.memo === oldMemo)) it.memo = s.memo;
+      if(untouched){
+        it.vendor = s.vendor || "";
+        it.paidAmount = s.paidAmount || 0;
+        it.remainingAmount = s.remainingAmount || 0;
+      }
+      const olds = OLD_MEMO[it.title] || [];
+      if(s.memo && (!it.memo || olds.indexOf(it.memo) !== -1)) it.memo = s.memo;
     });
 
     SEED_V3_ADD.forEach(title=>{
