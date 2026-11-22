@@ -104,6 +104,32 @@
   .progress-foot .money{color:var(--ink-2);font-weight:600}
   .progress-foot .money b{color:var(--ink);font-weight:700}
 
+  /* ── money summary (낸 돈 / 앞으로 낼 돈) ── */
+  .money-summary{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:15px 18px 14px;box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .ms-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .ms-head .t{font-size:14px;font-weight:700}
+  .ms-head .s{font-size:12px;color:var(--ink-3)}
+  .ms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:11px}
+  .ms{
+    border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0;
+    background:linear-gradient(180deg,#ffffff,#fbfcff);
+  }
+  .ms .k{font-size:11.5px;font-weight:700;color:var(--ink-3)}
+  .ms .v{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-top:3px;line-height:1.25;font-variant-numeric:tabular-nums;word-break:break-all}
+  .ms .u{font-size:12px;color:var(--ink-3);margin-top:1px}
+  .ms.paid{border-color:#d5efdf;background:linear-gradient(180deg,#ffffff,#f3fbf7)}
+  .ms.paid .v{color:#0b7a51}
+  .ms.remain{border-color:#f7e2cf;background:linear-gradient(180deg,#ffffff,#fff8f2)}
+  .ms.remain .v{color:#b45309}
+  .ms.total{border-color:#dfe5fb;background:linear-gradient(140deg,#ffffff,#eef2ff)}
+  .ms.total .v{color:var(--accent-ink)}
+  .ms-bar{height:8px;border-radius:99px;background:#f1f4fa;border:1px solid #edf0f8;overflow:hidden;margin-top:12px}
+  .ms-bar > i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#38c08a,#8ee0bb);transition:width .45s cubic-bezier(.22,.8,.3,1)}
+  .ms-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:7px;font-size:11.8px;color:var(--ink-3)}
+
   /* ── toolbar ── */
   .toolbar{
     position:sticky;top:0;z-index:20;
@@ -207,6 +233,24 @@
   .due.soon{background:var(--warn-soft);color:var(--warn);border-color:#fadfc9}
   .memo{margin:3px 0 0;font-size:12.8px;color:var(--ink-3);line-height:1.5;word-break:keep-all}
   .amt{font-size:13px;font-weight:700;color:var(--ink-2);white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums}
+  .vendor{
+    font-size:11.5px;font-weight:600;color:var(--accent-ink);background:var(--accent-soft);
+    border:1px solid #d8e0fd;border-radius:6px;padding:1px 7px;letter-spacing:-.01em;
+    max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .money-col{
+    display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:0 0 auto;
+    padding-top:1px;font-variant-numeric:tabular-nums;
+  }
+  .money-col .m{font-size:12.5px;font-weight:700;white-space:nowrap;letter-spacing:-.01em}
+  .money-col .m .lb{
+    font-size:10.5px;font-weight:700;border-radius:5px;padding:0 5px;margin-right:4px;
+    vertical-align:1px;letter-spacing:.01em;
+  }
+  .money-col .paid{color:#0b7a51}
+  .money-col .paid .lb{background:var(--ok-soft);color:#0b7a51;border:1px solid #c9eeda}
+  .money-col .remain{color:#b45309}
+  .money-col .remain .lb{background:var(--warn-soft);color:var(--warn);border:1px solid #fadfc9}
   .acts{display:flex;gap:2px;flex:0 0 auto;opacity:.55;transition:opacity .12s}
   li.item:hover .acts, li.item:focus-within .acts{opacity:1}
   .icon-btn{
@@ -254,6 +298,7 @@
   }
   .fld input:focus,.fld select:focus,.fld textarea:focus{border-color:#b9c6f8;box-shadow:0 0 0 3px rgba(79,109,245,.13)}
   .fld textarea{resize:vertical;min-height:64px;line-height:1.5}
+  .fld .opt{font-weight:500;color:var(--ink-3);font-size:11.5px}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .hint{font-size:11.5px;font-weight:400;color:var(--ink-3);margin:0}
   .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:2px}
@@ -273,6 +318,17 @@
     li.item{padding:9px 8px;gap:9px}
     .acts{opacity:1}
     .amt{font-size:12px}
+    .ms-grid{grid-template-columns:1fr 1fr;gap:8px}
+    .ms.total{grid-column:1 / -1}
+    .ms{padding:9px 10px}
+    .ms .v{font-size:15.5px}
+    li.item{flex-wrap:wrap}
+    .money-col{
+      order:5;flex:1 0 100%;flex-direction:row;gap:10px;align-items:baseline;
+      justify-content:flex-start;padding-left:31px;padding-top:1px;
+    }
+    .money-col .m{font-size:12px}
+    .vendor{max-width:100%}
   }
   @media print{
     body{background:#fff;padding:0}
@@ -337,7 +393,35 @@
     <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progBar"><i id="progFill"></i></div>
     <div class="progress-foot">
       <span id="progMsg">체크리스트를 불러오는 중…</span>
-      <span class="money" id="progMoney"></span>
+    </div>
+  </section>
+
+  <section class="money-summary" aria-label="이사 비용 요약">
+    <div class="ms-head">
+      <div class="t">💰 이사 비용</div>
+      <div class="s" id="msDept">🏦 잔금대출 약 9억 원은 은행 미정 → 메모에만 표시 · 합계 제외</div>
+    </div>
+    <div class="ms-grid">
+      <div class="ms paid">
+        <div class="k">✅ 낸 돈 (계약금)</div>
+        <div class="v" id="sumPaid">0원</div>
+        <div class="u" id="sumPaidSub">0개 항목</div>
+      </div>
+      <div class="ms remain">
+        <div class="k">⏳ 앞으로 낼 돈 (잔금)</div>
+        <div class="v" id="sumRemain">0원</div>
+        <div class="u" id="sumRemainSub">0개 항목</div>
+      </div>
+      <div class="ms total">
+        <div class="k">🧾 전체 합계</div>
+        <div class="v" id="sumTotal">0원</div>
+        <div class="u" id="sumTotalSub">낸 돈 + 앞으로 낼 돈</div>
+      </div>
+    </div>
+    <div class="ms-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="msBar" aria-label="전체 금액 중 낸 돈 비중"><i id="msFill"></i></div>
+    <div class="ms-foot">
+      <span id="msRatio">전체 금액 중 낸 돈 0%</span>
+      <span id="msCount">금액 적은 항목 0개</span>
     </div>
   </section>
 
@@ -345,7 +429,7 @@
     <div class="tb-row">
       <div class="search">
         <span class="ic" aria-hidden="true">🔍</span>
-        <input id="q" type="search" placeholder="항목·메모 검색 (예: 전입, 잔금, 커튼)" aria-label="항목 검색" autocomplete="off">
+        <input id="q" type="search" placeholder="항목·업체·메모 검색 (예: 전입, 잔금, 커튼)" aria-label="항목 검색" autocomplete="off">
       </div>
       <button class="btn" id="btnOnlyTodo" type="button" aria-pressed="false">미완료만</button>
       <button class="btn primary" id="btnAdd" type="button">＋ 항목 추가</button>
@@ -379,18 +463,24 @@
       <label class="fld">항목명
         <input id="fTitle" type="text" required maxlength="90" placeholder="예: 전입신고" autocomplete="off">
       </label>
+      <label class="fld">업체명 <span class="opt">선택</span>
+        <input id="fVendor" type="text" maxlength="60" placeholder="예: ○○이사, 삼성전자 서비스" autocomplete="off">
+      </label>
+      <div class="row2">
+        <label class="fld">낸 돈 (계약금, 원)
+          <input id="fPaid" type="number" min="0" step="10000" placeholder="0" inputmode="numeric">
+        </label>
+        <label class="fld">앞으로 낼 돈 (잔금, 원)
+          <input id="fRemain" type="number" min="0" step="10000" placeholder="0" inputmode="numeric">
+        </label>
+      </div>
+      <label class="fld">일정
+        <input id="fDue" type="date">
+      </label>
       <label class="fld">메모
         <textarea id="fMemo" maxlength="400" placeholder="준비물·연락처·주의사항 (연락처·계좌번호는 넣지 마세요)"></textarea>
       </label>
-      <div class="row2">
-        <label class="fld">금액 (원)
-          <input id="fAmount" type="number" min="0" step="1000" placeholder="0" inputmode="numeric">
-        </label>
-        <label class="fld">일정
-          <input id="fDue" type="date">
-        </label>
-      </div>
-      <p class="hint">금액은 예상 비용으로 합계에 잡히고, 항목을 완료 체크하면 지출로 집계됩니다.</p>
+      <p class="hint" id="fMoneyHint">낸 돈 0원 + 앞으로 낼 돈 0원 = 합계 0원</p>
       <div class="modal-actions">
         <button class="btn ghost" id="modalCancel" type="button">취소</button>
         <button class="btn primary" type="submit">저장</button>
@@ -406,7 +496,7 @@
   /* ─────────── 설정 ─────────── */
   const MOVE_DATE = "2026-12-17";
   const STORAGE_KEY = "moving-dashboard-v1";
-  const DATA_VERSION = 1;
+  const DATA_VERSION = 2;
 
   const CATS = [
     { id:"vendor",  icon:"🔧", name:"업체·시공·설치", hint:"업체 통해 예약·진행한 항목과 추가 시공" },
@@ -418,7 +508,11 @@
 
   /* ─────────── 기본 체크리스트 ─────────── */
   function defaults(){
-    const d = (cat,title,memo,amount,due,done) => ({ id:uid(), cat, title, memo:memo||"", amount:amount||0, due:due||"", done:!!done, doneAt:done?new Date().toISOString():"" });
+    const d = (cat,title,memo,amount,due,done,opt) => Object.assign({
+      id:uid(), cat, title, memo:memo||"",
+      vendor:"", paidAmount:0, remainingAmount:0,
+      due:due||"", done:!!done, doneAt:done?new Date().toISOString():""
+    }, opt||{});
     return [
       /* 업체·시공·설치 — 이미 완료 */
       d("vendor","줄눈","업체 통해 완료",0,"",true),
@@ -513,12 +607,24 @@
     save();
   }
   function normalize(i){
+    /* 예전 버전 호환 — 단일 금액(amount)만 있던 항목은 낸 돈/앞으로 낼 돈으로 옮긴다.
+       이미 완료한 항목은 낸 돈, 아직 안 한 항목은 앞으로 낼 돈으로 본다. */
+    const legacy = Math.max(0, Number(i.amount) || 0);
+    const hasNew = (i.paidAmount !== undefined && i.paidAmount !== null)
+                || (i.remainingAmount !== undefined && i.remainingAmount !== null);
+    let paid = Math.max(0, Number(i.paidAmount) || 0);
+    let remain = Math.max(0, Number(i.remainingAmount) || 0);
+    if(!hasNew && legacy){
+      if(i.done) paid = legacy; else remain = legacy;
+    }
     return {
       id: i.id || uid(),
       cat: CATS.some(c=>c.id===i.cat) ? i.cat : "admin",
       title: String(i.title||"").slice(0,90),
+      vendor: String(i.vendor||"").slice(0,60),
       memo: String(i.memo||"").slice(0,400),
-      amount: Number(i.amount)||0,
+      paidAmount: paid,
+      remainingAmount: remain,
       due: /^\d{4}-\d{2}-\d{2}$/.test(i.due||"") ? i.due : "",
       done: !!i.done,
       doneAt: i.doneAt || (i.done ? new Date().toISOString() : "")
@@ -563,6 +669,9 @@
     if(!n) return "";
     return n.toLocaleString("ko-KR") + "원";
   }
+  function wonOrZero(n){
+    return won(n) || "0원";
+  }
   function shortDate(s){
     const p = s.split("-");
     return Number(p[1]) + "." + Number(p[2]);
@@ -602,7 +711,7 @@
     if(ui.onlyTodo && i.done) return false;
     if(ui.cat !== "all" && i.cat !== ui.cat) return false;
     if(ui.q){
-      const hay = (i.title + " " + i.memo).toLowerCase();
+      const hay = (i.title + " " + (i.vendor||"") + " " + i.memo).toLowerCase();
       if(!hay.includes(ui.q)) return false;
     }
     return true;
@@ -621,6 +730,7 @@
   function render(){
     renderDday();
     renderProgress();
+    renderMoney();
     renderChips();
     renderSections();
   }
@@ -638,17 +748,41 @@
     const bar = document.getElementById("progBar");
     bar.setAttribute("aria-valuenow", String(pct));
 
-    const budget = state.items.reduce((s,i)=>s+(i.amount||0),0);
-    const spent = state.items.filter(i=>i.done).reduce((s,i)=>s+(i.amount||0),0);
-    document.getElementById("progMoney").innerHTML = budget
-      ? "예상 비용 <b>" + won(budget) + "</b>" + (spent ? " · 지출 완료 <b>" + won(spent) + "</b>" : "")
-      : "";
-
     let msg;
     if(!total) msg = "항목이 없습니다. ＋ 항목 추가로 시작해 보세요.";
     else if(done === total) msg = "모두 완료 🎉 이제 이사만 남았습니다.";
     else msg = "남은 항목 " + (total-done) + "개 · 오늘 처리할 것부터 위에 모아 두었습니다.";
     document.getElementById("progMsg").textContent = msg;
+  }
+
+  function renderMoney(){
+    let paid = 0, remain = 0, paidN = 0, remainN = 0, moneyN = 0;
+    state.items.forEach(i=>{
+      const p = Math.max(0, i.paidAmount || 0);
+      const r = Math.max(0, i.remainingAmount || 0);
+      if(p) { paid += p; paidN++; }
+      if(r) { remain += r; remainN++; }
+      if(p || r) moneyN++;
+    });
+    const total = paid + remain;
+    const pct = total ? Math.round(paid / total * 100) : 0;
+
+    document.getElementById("sumPaid").textContent = wonOrZero(paid);
+    document.getElementById("sumRemain").textContent = wonOrZero(remain);
+    document.getElementById("sumTotal").textContent = wonOrZero(total);
+    document.getElementById("sumPaidSub").textContent = paidN + "개 항목";
+    document.getElementById("sumRemainSub").textContent = remainN + "개 항목";
+    document.getElementById("sumTotalSub").textContent = total
+      ? moneyN + "개 항목 기준 · 낸 돈 + 앞으로 낼 돈"
+      : "금액을 적으면 바로 집계됩니다";
+
+    const fill = document.getElementById("msFill");
+    fill.style.width = pct + "%";
+    document.getElementById("msBar").setAttribute("aria-valuenow", String(pct));
+    document.getElementById("msRatio").textContent = total
+      ? "전체 금액 중 낸 돈 " + pct + "% · 앞으로 낼 돈 " + (100-pct) + "%"
+      : "전체 금액 중 낸 돈 0%";
+    document.getElementById("msCount").textContent = "금액 적은 항목 " + moneyN + "개";
   }
 
   function renderChips(){
@@ -728,16 +862,27 @@
       + '<div class="body">'
       +   '<div class="title-row">'
       +     '<span class="title">'+esc(i.title)+'</span>'
+      +     (i.vendor ? '<span class="vendor" title="업체명">🏢 '+esc(i.vendor)+'</span>' : '')
       +     (i.done ? '<span class="tag">완료</span>' : '')
       +     dueHTML
       +   '</div>'
       +   (i.memo ? '<p class="memo">'+esc(i.memo)+'</p>' : '')
       + '</div>'
-      + (i.amount ? '<div class="amt">'+won(i.amount)+'</div>' : '')
+      + moneyHTML(i)
       + '<div class="acts">'
       +   '<button class="icon-btn" type="button" data-act="edit" title="수정" aria-label="'+escAttr(i.title)+' 수정">✎</button>'
       +   '<button class="icon-btn del" type="button" data-act="del" title="삭제" aria-label="'+escAttr(i.title)+' 삭제">🗑</button>'
       + '</div></li>';
+  }
+
+  function moneyHTML(i){
+    const p = Math.max(0, i.paidAmount || 0);
+    const r = Math.max(0, i.remainingAmount || 0);
+    if(!p && !r) return "";
+    let h = '<div class="money-col">';
+    if(p) h += '<span class="m paid" title="계약금 등 이미 낸 돈"><span class="lb">낸 돈</span>'+won(p)+'</span>';
+    if(r) h += '<span class="m remain" title="앞으로 낼 돈(잔금)"><span class="lb">잔금</span>'+won(r)+'</span>';
+    return h + '</div>';
   }
 
   function esc(s){
@@ -799,12 +944,23 @@
   const form = document.getElementById("itemForm");
   const fCat = document.getElementById("fCat");
   const fTitle = document.getElementById("fTitle");
+  const fVendor = document.getElementById("fVendor");
   const fMemo = document.getElementById("fMemo");
-  const fAmount = document.getElementById("fAmount");
+  const fPaid = document.getElementById("fPaid");
+  const fRemain = document.getElementById("fRemain");
   const fDue = document.getElementById("fDue");
+  const fMoneyHint = document.getElementById("fMoneyHint");
   let editingId = null;
 
   fCat.innerHTML = CATS.map(c=>'<option value="'+c.id+'">'+c.icon+" "+esc(c.name)+'</option>').join("");
+
+  function updateMoneyHint(){
+    const p = Math.max(0, Number(fPaid.value)||0);
+    const r = Math.max(0, Number(fRemain.value)||0);
+    fMoneyHint.textContent = "낸 돈 " + wonOrZero(p) + " + 앞으로 낼 돈 " + wonOrZero(r) + " = 합계 " + wonOrZero(p+r);
+  }
+  fPaid.addEventListener("input", updateMoneyHint);
+  fRemain.addEventListener("input", updateMoneyHint);
 
   function openModal(id){
     editingId = id || null;
@@ -813,16 +969,21 @@
     if(it){
       fCat.value = it.cat;
       fTitle.value = it.title;
+      fVendor.value = it.vendor || "";
       fMemo.value = it.memo || "";
-      fAmount.value = it.amount ? it.amount : "";
+      fPaid.value = it.paidAmount ? it.paidAmount : "";
+      fRemain.value = it.remainingAmount ? it.remainingAmount : "";
       fDue.value = it.due || "";
     }else{
       fCat.value = ui.cat !== "all" ? ui.cat : "admin";
       fTitle.value = "";
+      fVendor.value = "";
       fMemo.value = "";
-      fAmount.value = "";
+      fPaid.value = "";
+      fRemain.value = "";
       fDue.value = "";
     }
+    updateMoneyHint();
     modalBg.classList.add("open");
     setTimeout(()=>fTitle.focus(), 40);
   }
@@ -846,8 +1007,10 @@
     const payload = {
       cat: fCat.value,
       title: title.slice(0,90),
+      vendor: fVendor.value.trim().slice(0,60),
       memo: fMemo.value.trim().slice(0,400),
-      amount: Math.max(0, Number(fAmount.value)||0),
+      paidAmount: Math.max(0, Number(fPaid.value)||0),
+      remainingAmount: Math.max(0, Number(fRemain.value)||0),
       due: fDue.value || ""
     };
     if(editingId){
