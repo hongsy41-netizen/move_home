@@ -414,6 +414,11 @@
     body{padding:16px 12px 56px;font-size:16px}
     h1{font-size:21px}
     .sub{font-size:13.5px}
+    .toolbar{position:static;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;padding:2px 0 4px;border-bottom:0;margin-bottom:0}
+    .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:5px;scrollbar-width:none}
+    .chips::-webkit-scrollbar{display:none}
+    .chip{flex:0 0 auto}
+    .owner-chips{margin-top:5px;padding-top:7px}
     .dday{padding:8px 14px}
     .dday strong{font-size:23px}
     .cards{grid-template-columns:1fr 1fr;gap:10px}
@@ -472,7 +477,7 @@
   <section class="cards" aria-label="이사 요약">
     <div class="card">
       <div class="k">📅 이사일</div>
-      <div class="v">2026. 12. 17 (목)</div>
+      <div class="v">2026.12.17 (목)</div>
       <div class="s" id="daysLeftSub">이사까지 24일</div>
     </div>
 
@@ -1236,6 +1241,7 @@
       + '<p class="warnline">🏦 잔금대출 약 9억 원 · 중도금 이자 · 조합 잔금은 금액이 미정이라 이 합계에서 빼고 메모로만 관리합니다.</p>'
       + '<p>합계 = 낸 돈 ' + wonOrZero(paid) + ' + 앞으로 낼 돈 ' + wonOrZero(remain) + ' = <b>' + wonOrZero(total) + '</b> · 금액이 없는 항목 ' + noMoney + '개는 여기에 나오지 않습니다.</p>'
       + '<p>💡 이 붙은 항목은 제가 미리 넣어 둔 제안입니다. 실제로 진행할지 확인해 주세요.</p>'
+      + '<p><button class="btn" type="button" data-act="backlist">← 체크리스트로 돌아가기</button></p>'
       + '</div>';
   }
 
@@ -1311,6 +1317,7 @@
   });
   document.getElementById("btnMoneyView").addEventListener("click", function(){ setView("money"); });
   document.getElementById("moneyView").addEventListener("click", function(e){
+    if(e.target.closest('[data-act="backlist"]')){ setView("list"); return; }
     const btn = e.target.closest("button[data-edit]");
     if(btn) openModal(btn.dataset.edit);
   });
