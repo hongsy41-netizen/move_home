@@ -155,6 +155,8 @@
   .viewtabs .vt.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(20,28,45,.12)}
   body.money-view .tb-row, body.money-view #chips, body.money-view #ownerChips{display:none}
   body.money-view #sections{display:none}
+  body.timeline-view .tb-row, body.timeline-view #chips, body.timeline-view #ownerChips{display:none}
+  body.timeline-view #sections{display:none}
   .search{
     flex:1 1 210px;min-width:160px;position:relative;display:flex;align-items:center;
   }
@@ -391,6 +393,80 @@
   .mv-note .warnline{color:#b45309;font-weight:600}
   .mv-empty{padding:40px 22px;text-align:center;color:var(--ink-3);font-size:15px;line-height:1.6}
 
+  /* ── 날짜별 일정 뷰 ── */
+  .timeline-view{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin:12px 0;overflow:hidden;
+  }
+  .tl-key{
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
+    padding:16px 22px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#fcfdff,#fff);
+  }
+  .tl-key .kc{border:1px solid var(--line);border-radius:13px;padding:11px 13px;background:#fff;min-width:0}
+  .tl-key .kc .d{font-size:13px;font-weight:700;color:var(--ink-3);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .tl-key .kc .d em{font-style:normal;font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 6px;background:#f3f5fa;border:1px solid var(--line);color:var(--ink-3)}
+  .tl-key .kc .t{font-size:15px;font-weight:800;margin-top:5px;letter-spacing:-.01em}
+  .tl-key .kc .m{font-size:12.5px;color:var(--ink-3);margin-top:2px;line-height:1.45;word-break:keep-all}
+  .tl-key .kc.empty{border-style:dashed;background:#fafbff}
+  .tl-key .kc.empty .t{color:var(--ink-3)}
+  .tl-key .kc.move{border-color:#dfe5fb;background:linear-gradient(140deg,#fff,#eef2ff)}
+  .tl-days{padding:2px 22px 18px}
+  .tl-day{display:grid;grid-template-columns:82px minmax(0,1fr);gap:14px;padding:16px 0;border-top:1px solid #f2f4fa}
+  .tl-day:first-child{border-top:0}
+  .tl-date{display:flex;flex-direction:column;gap:2px;padding-top:2px}
+  .tl-date b{font-size:19px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .tl-date span{font-size:12.5px;font-weight:600;color:var(--ink-3)}
+  .tl-date em{
+    font-style:normal;font-size:12px;font-weight:700;color:var(--ink-3);background:#f3f5fa;
+    border:1px solid var(--line);border-radius:6px;padding:1px 7px;align-self:flex-start;margin-top:3px;white-space:nowrap;
+  }
+  .tl-date em.on{background:var(--warn-soft);border-color:#fadfc9;color:var(--warn)}
+  .tl-day.move .tl-date b{color:var(--accent-ink)}
+  .tl-main{min-width:0}
+  .tl-movebadge{
+    display:inline-block;font-size:12.5px;font-weight:700;color:var(--accent-ink);
+    background:var(--accent-soft);border:1px solid #d8e0fd;border-radius:7px;padding:2px 9px;margin-bottom:8px;
+  }
+  .tl-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .tl-item{
+    display:flex;align-items:flex-start;gap:11px;padding:11px 12px;
+    border:1px solid var(--line);border-radius:12px;background:#fff;transition:background .12s;
+  }
+  .tl-item:hover{background:#fafbff}
+  .tl-item.done{opacity:.7}
+  .tl-item.done .title{text-decoration:line-through;text-decoration-thickness:1px;color:var(--ink-3)}
+  .tl-item .tl-body{flex:1;min-width:0}
+  .tl-item .tl-title{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .tl-time{
+    font-size:12px;font-weight:800;color:#0b6b8a;background:#eaf6fb;border:1px solid #bfe3f0;
+    border-radius:6px;padding:1px 7px;white-space:nowrap;font-variant-numeric:tabular-nums;
+  }
+  .tl-none{
+    border:1px dashed var(--line-2);border-radius:12px;padding:14px 16px;background:#fafbff;
+    display:flex;flex-direction:column;gap:3px;
+  }
+  .tl-none b{font-size:15px;color:var(--ink-2)}
+  .tl-none span{font-size:13.5px;color:var(--ink-3);line-height:1.55}
+  .tl-note{
+    margin:9px 0 0;font-size:13px;color:var(--ink-2);background:#fcfdff;
+    border-left:3px solid #d8e0fd;padding:7px 11px;border-radius:0 8px 8px 0;line-height:1.55;
+  }
+  .tl-foot{
+    padding:14px 22px 18px;border-top:1px solid var(--line);background:#fcfdff;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  .tl-foot p{margin:0;font-size:13px;color:var(--ink-3);line-height:1.55;max-width:640px}
+  .tl-daycnt{font-size:12.5px;font-weight:700;color:var(--ink-3);margin-top:8px}
+  .tl-empty{padding:40px 22px;text-align:center;color:var(--ink-3);font-size:15px;line-height:1.6}
+  @media (max-width:680px){
+    .tl-key{grid-template-columns:1fr 1fr;gap:8px;padding:14px 16px}
+    .tl-days{padding:2px 16px 16px}
+    .tl-day{grid-template-columns:62px minmax(0,1fr);gap:10px;padding:14px 0}
+    .tl-date b{font-size:16px}
+    .tl-foot{padding:14px 16px}
+  }
+
   @media (max-width:680px){
     table.mv thead{display:none}
     table.mv, table.mv tbody, table.mv tfoot{display:block}
@@ -445,7 +521,9 @@
     }
     .money-col .m{font-size:14.5px}
     .vendor{max-width:100%}
-    .viewtabs .vt{font-size:14px;padding:10px 8px}
+    .viewtabs{overflow-x:auto;scrollbar-width:none}
+    .viewtabs::-webkit-scrollbar{display:none}
+    .viewtabs .vt{flex:0 0 auto;font-size:13px;padding:9px 10px;gap:5px}
     .mv-head{padding:16px 16px 14px}
     .mv-note{padding:14px 16px 18px}
   }
@@ -551,6 +629,7 @@
   <div class="toolbar">
     <div class="viewtabs" role="tablist" aria-label="보기 전환">
       <button class="vt active" type="button" role="tab" aria-selected="true" data-view="list">✅ 체크리스트</button>
+      <button class="vt" type="button" role="tab" aria-selected="false" data-view="timeline">📅 날짜별 일정</button>
       <button class="vt" type="button" role="tab" aria-selected="false" data-view="money">💰 비용·결제 내역</button>
     </div>
     <div class="tb-row">
@@ -568,6 +647,8 @@
     <div class="chips" id="chips" role="tablist" aria-label="카테고리 필터"></div>
     <div class="chips owner-chips" id="ownerChips" role="tablist" aria-label="내 항목·추천 제안 필터"></div>
   </div>
+
+  <section class="timeline-view" id="timelineView" hidden aria-label="날짜별 일정"></section>
 
   <section class="money-view" id="moneyView" hidden aria-label="비용·결제 내역"></section>
 
@@ -635,12 +716,14 @@
   /* ─────────── 설정 ─────────── */
   const MOVE_DATE = "2026-12-17";
   const STORAGE_KEY = "moving-dashboard-v1";
-  const DATA_VERSION = 7;
+  const DATA_VERSION = 8;
 
   /* 성윤 님이 직접 말씀하신(이미 정해 둔) 항목 — 나머지 기본 항목은 '💡 추천 제안'으로 구분한다. */
   const OWN_TITLES = [
     "줄눈", "거실 무타공 TV", "사전점검", "입주청소", "인터넷 이전설치", "음식물처리기", "쾌존",
     "세탁기·건조기 설치", "홈카페 아일랜드 세팅", "커피머신 (웬두지 리타 BA)", "가구 (소파·식탁·침대)",
+    "조명 — 아르떼미데 톨로메오 메가 플로어",
+    "밥솥", "에어프라이기", "수건", "서율방 매트리스 커버",
     "중도금 이자 상환", "중도금 완납 증명서 발급",
     "주택담보(잔금)대출 은행 비교·선정 및 실행", "조합 잔금 납부 및 추가 납부금 확인",
     "이삿짐 업체 최종 확인", "엘리베이터 예약 15:00~18:00 재확인"
@@ -659,19 +742,21 @@
   /* ─────────── 실제 계약금·잔금 내역 (기본 체크리스트에 반영) ─────────── */
   const COSTS = {
     "줄눈": { paidAmount:65000, remainingAmount:585000,
-      memo:"욕실 바닥 에폭시·벽면 3면 폴리·주방 실리콘 패키지 (총 65만) · 📌 예약 완료, 잔금 보름 전 연락" },
+      memo:"욕실 바닥 에폭시·벽면 3면 폴리·주방 실리콘 패키지 (총 65만, 잔금 보름 전 연락) · 🗓 12/14(월) 11:00 ~ 17:00 시공 예정" },
     "거실 무타공 TV": { vendor:"윙티비", paidAmount:0, remainingAmount:240000,
       memo:"무타공 설치 총 24만 원 · 📌 예약 완료 · ☎ 끝자리 6409" },
-    "입주청소": { paidAmount:0, remainingAmount:400000,
-      memo:"총 40만 원 · 📌 예약 완료 · ☎ 끝자리 4129" },
+    "입주청소": { paidAmount:50000, remainingAmount:350000,
+      memo:"총 40만 원 (선입금 5만 원 납부 · 잔금 35만) · ☎ 끝자리 4129 · 🗓 12/16(수) 시공 예정" },
     "세탁기·건조기 설치": { paidAmount:0, remainingAmount:3700000,
-      memo:"총 370만 원 · 미구매 (LG 25kg+25kg, 임직원 등급/임직원몰 구매 예정)" },
+      memo:"총 370만 원 · 미구매 (LG 25kg+25kg, 임직원 등급/임직원몰 구매 예정) · 🗓 12/18(금) 설치 예정" },
     "이삿짐 업체 최종 확인": { vendor:"한미", paidAmount:100000, remainingAmount:1700000,
       memo:"6톤, 사다리차 29만 원 포함 (총 180만) · ☎ 끝자리 2482 · 방문 시간·추가 요금 통화 확인" },
     "쾌존": { vendor:"쾌존", paidAmount:50000, remainingAmount:1200000,
       memo:"총 125만 원 (선입금 5만 / 잔금 120만)" },
     "가구 (소파·식탁·침대)": { vendor:"린다데코", paidAmount:1000000, remainingAmount:5500000,
-      memo:"쇼파 250 · 식탁 149 · 침대 269 (총 717만 → 650만 할인)" },
+      memo:"쇼파 250 · 식탁 149 · 침대 269 (총 717만 → 650만 할인) · 🗓 12/17(목) 오전 배송·설치 예정 (오후 15:00~18:00 이삿짐·엘리베이터보다 먼저)" },
+    "조명 — 아르떼미데 톨로메오 메가 플로어": { vendor:"아르떼미데 (코오롱몰)", paidAmount:0, remainingAmount:1865600,
+      memo:"파치먼트 페이퍼 420 · IVORY · 직원할인가 (미구매)" },
     "커피머신 (웬두지 리타 BA)": { paidAmount:2150000, remainingAmount:0,
       memo:"215만 원 결제 완료" }
   };
@@ -680,16 +765,34 @@
   /* 업체명 정정 — 이미 저장된 항목에도 반영 */
   const VENDOR_FIX = { "리안데코": "린다데코" };
 
+  /* 성윤 님이 확정한 일정 — 이미 저장된 항목에도 날짜를 맞춘다 */
+  const CONFIRMED_DUE = {
+    "줄눈": "2026-12-14",
+    "입주청소": "2026-12-16",
+    "가구 (소파·식탁·침대)": "2026-12-17"
+  };
+  /* 12월 15일은 일정을 두지 않는 날 — 이 날 잳혀 있던 기본 항목은 앞뒤 날짜로 옮긴다 */
+  const MOVE_OFF_15 = {
+    "세탁기·건조기 설치": "2026-12-18",
+    "도시가스 해지·승계": "2026-12-16",
+    "전기 해지·승계": "2026-12-16",
+    "수도 해지·승계": "2026-12-16"
+  };
+
   /* 메모 문구가 바뀐 항목의 예전 기본 메모 — 사용자가 직접 고친 메모는 덮어쓰지 않기 위해 */
   const OLD_MEMO = {
-    "줄눈": ["업체 통해 완료", "욕실 바닥 에폭시·벽면 3면 폴리·주방 실리콘 패키지 (총 65만, 잔금 보름 전 연락)"],
+    "줄눈": ["업체 통해 완료", "욕실 바닥 에폭시·벽면 3면 폴리·주방 실리콘 패키지 (총 65만, 잔금 보름 전 연락)", "욕실 바닥 에폭시·벽면 3면 폴리·주방 실리콘 패키지 (총 65만) · 📌 예약 완료, 잔금 보름 전 연락"],
     "거실 무타공 TV": ["업체 통해 완료", "무타공 설치 총 24만 원", "무타공 설치 총 24만 원 · ☎ 끝자리 6409"],
-    "입주청소": ["업체 통해 완료", "총 40만 원 (업체 통해 완료)", "총 40만 원 · ☎ 끝자리 4129", "총 40만 원 (업체 통해 완료) · ☎ 끝자리 4129"],
+    "입주청소": ["업체 통해 완료", "총 40만 원 (업체 통해 완료)", "총 40만 원 · ☎ 끝자리 4129", "총 40만 원 · 📌 예약 완료 · ☎ 끝자리 4129", "총 40만 원 · ☎ 끝자리 4129 · 🗓 12/16(수) 시공 예정", "총 40만 원 (업체 통해 완료) · ☎ 끝자리 4129"],
     "인터넷 이전설치": ["업체 통해 완료"],
     "음식물처리기": ["업체 통해 완료"],
     "세탁기·건조기 설치": [
       "도착지 배수·전원 위치 확인, 설치 기사 방문 시간 조율",
-      "총 370만 원 — 워시타워 (결제 완료·잔금 구분 필요 시 수정)"
+      "총 370만 원 — 워시타워 (결제 완료·잔금 구분 필요 시 수정)",
+      "총 370만 원 · 미구매 (LG 25kg+25kg, 임직원 등급/임직원몰 구매 예정)"
+    ],
+    "가구 (소파·식탁·침대)": [
+      "쇼파 250 · 식탁 149 · 침대 269 (총 717만 → 650만 할인)"
     ],
     "이삿짐 업체 최종 확인": [
       "방문 시간·짐 목록·추가 요금 없는지 통화로 확인",
@@ -709,18 +812,17 @@
     }, COSTS[title] || {}, opt || {});
     return [
       /* 업체·시공·설치 — 예약만 끝났고 시공 전(체크는 시공 후) */
-      d("vendor","줄눈","예약 완료 · 시공 전",0,"",false),
+      d("vendor","줄눈","예약 완료 · 시공 전",0,"2026-12-14",false),
       d("vendor","거실 무타공 TV","예약 완료 · 설치 전",0,"",false),
       d("vendor","사전점검","업체 통해 완료",0,"",true),
-      d("vendor","입주청소","예약 완료 · 청소 전",0,"",false),
+      d("vendor","입주청소","예약 완료 · 청소 전",0,"2026-12-16",false),
       d("vendor","인터넷 이전설치","예약 완료 · 설치 전(도착지에서 확인)",0,"",false),
       d("vendor","음식물처리기","예약 완료 · 설치 전",0,"",false),
       d("vendor","쾌존","",0,"",false),
       /* 업체·시공·설치 — 추가로 챙길 것 */
       d("vendor","에어컨 이전설치 예약","이전 설치비·배관 길이 추가 요금 미리 확인",0,"2026-12-10"),
-      d("vendor","세탁기·건조기 설치","도착지 배수·전원 위치 확인, 설치 기사 방문 시간 조율",0,"2026-12-15"),
+      d("vendor","세탁기·건조기 설치","도착지 배수·전원 위치 확인, 설치 기사 방문 시간 조율",0,"2026-12-18"),
       d("vendor","커튼·블라인드 시공","거실·안방·서율이 방 창 치수 실측 후 주문",0,"2026-12-05"),
-      d("vendor","조명 교체·추가","거실·주방·현관 위주, 필요하면 업체 견적",0,"2026-12-08"),
       d("vendor","도어락 교체","시공 가능 여부·비밀번호 변경까지 함께",0,"2026-12-16"),
       d("vendor","정수기·비데 이전설치","구독 업체에 주소 이전 요청",0,"2026-12-12"),
 
@@ -730,9 +832,9 @@
       d("admin","임대차 신고","전세·월세 계약인 경우에만 · 보증금·월세 조건에 따라 30일 이내 신고 대상 확인",0,"2027-01-16"),
       d("admin","우편물 주소 이전","인터넷우체국 주소이전서비스 신청 (약 7일 소요)",0,"2026-12-10"),
       d("admin","구 집 관리비 정산","이사 당일 검침 후 관리사무소 정산",0,"2026-12-17"),
-      d("admin","도시가스 해지·승계","구 집 해지 / 새 집 승계 신청, 전출·전입 검침일 확인",0,"2026-12-15"),
-      d("admin","전기 해지·승계","한전 123 또는 앱에서 이사일 검침 예약",0,"2026-12-15"),
-      d("admin","수도 해지·승계","상하수도사업소에 이사일 검침 신청",0,"2026-12-15"),
+      d("admin","도시가스 해지·승계","구 집 해지 / 새 집 승계 신청, 전출·전입 검침일 확인",0,"2026-12-16"),
+      d("admin","전기 해지·승계","한전 123 또는 앱에서 이사일 검침 예약",0,"2026-12-16"),
+      d("admin","수도 해지·승계","상하수도사업소에 이사일 검침 신청",0,"2026-12-16"),
       d("admin","자동차 주소 변경","자동차등록증 · 30일 이내 미이행 시 과태료",0,"2026-12-24"),
       d("admin","자동차 보험 주소 변경","보험사 앱 또는 콜센터, 주차 위치 변경도 함께",0,"2026-12-18"),
       d("admin","건강보험 주소 변경","건강보험공단 1577-1000 또는 The건강보험 앱",0,"2026-12-24"),
@@ -758,7 +860,12 @@
       /* 살 것들·가전·가구 */
       d("buy","홈카페 아일랜드 세팅","리타 BA 자리·콘센트 위치, 60×210 아일랜드 기준 배치",0,"2026-12-10"),
       d("buy","커피머신 (웬두지 리타 BA)","",0,"",true),
-      d("buy","가구 (소파·식탁·침대)","",0,"",false),
+      d("buy","가구 (소파·식탁·침대)","",0,"2026-12-17",false),
+      d("buy","조명 — 아르떼미데 톨로메오 메가 플로어","",0,"",false),
+      d("buy","밥솥","미구매",0,"",false),
+      d("buy","에어프라이기","미구매",0,"",false),
+      d("buy","수건","미구매",0,"",false),
+      d("buy","서율방 매트리스 커버","미구매",0,"",false),
       d("buy","욕실 환풍기(휴젠뜨 대체)","샤오미 욕바 등 후보 비교, 설치 방식 확인",0,"2026-12-12"),
       d("buy","분리수거함","스테인레스 3구, 주방 동선에 맞는 크기",0,"2026-12-12"),
       d("buy","현관 신발장·수납 정리용품","새 집 치수 실측 후 주문",0,"2026-12-12"),
@@ -844,11 +951,76 @@
     });
   }
 
-  /* 예전 저장값 업그레이드(v6 → v7) */
+  /* 예전 저장값 업그레이드(v7 → v8) */
   function applyUpgrade(items){
     applyCostSeed(items);
+    applyDepositFix(items);
     applyReservedFix(items);
     applySuggestedFix(items);
+    applyScheduleFix(items);
+    applyLightFix(items);
+    applyBuyFix(items);
+  }
+
+  /* 성윤 님이 '살 것들'로 말한 추가 품목 — 저장값에 없으면 넣는다. */
+  const BUY_ADD = ["밥솥", "에어프라이기", "수건", "서율방 매트리스 커버"];
+  function applyBuyFix(items){
+    const seed = defaults();
+    BUY_ADD.forEach(title=>{
+      if(items.some(i=>i.title === title)) return;
+      const s = seed.filter(i=>i.title === title)[0];
+      if(!s) return;
+      items.unshift(Object.assign({}, s, { id:uid(), done:false, doneAt:"" }));
+    });
+  }
+
+  /* 성윤 님이 정한 조명(아르떼미데 톨로메오 메가 플로어, 코오롱몰 장바구니) —
+     예전 제안 항목 '조명 교체·추가'가 있으면 그 자리를 구체 항목으로 바꾸고, 없으면 새로 넣는다. */
+  const LIGHT_TITLE = "조명 — 아르떼미데 톨로메오 메가 플로어";
+  const LIGHT_OLD_TITLES = ["조명 교체·추가", "조명·스탠드 교체"];
+  function applyLightFix(items){
+    const seed = defaults().filter(i=>i.title === LIGHT_TITLE)[0];
+    if(!seed) return;
+    let target = null;
+    items.forEach(it=>{
+      if(!target && LIGHT_OLD_TITLES.indexOf(it.title) !== -1) target = it;
+    });
+    if(target){
+      target.title = LIGHT_TITLE;
+      target.cat = "buy";
+      target.vendor = seed.vendor || "";
+      target.memo = seed.memo || "";
+      target.paidAmount = seed.paidAmount || 0;
+      target.remainingAmount = seed.remainingAmount || 0;
+      target.due = "";
+      target.reserved = false;
+      target.suggested = false;
+      return;
+    }
+    if(items.some(i=>i.title === LIGHT_TITLE)) return;
+    items.unshift(Object.assign({}, seed, { id:uid() }));
+  }
+
+  /* 입주청소 선입금 5만 원 — 예전 기본값(낸 돈 0 / 잔금 40만)만 보정한다. */
+  function applyDepositFix(items){
+    items.forEach(it=>{
+      if(it.title !== "입주청소") return;
+      if((it.paidAmount||0) === 0 && (it.remainingAmount||0) === 400000){
+        it.paidAmount = 50000;
+        it.remainingAmount = 350000;
+      }
+    });
+  }
+
+  /* 확정 일정(12/14 줄눈 · 12/16 입주청소 · 12/17 가구)과 12/15 비우기를 저장값에 반영.
+     성윤 님이 이미 따로 정한 날짜(기본값이 아닌 값)는 건드리지 않는다. */
+  function applyScheduleFix(items){
+    items.forEach(it=>{
+      const fixed = CONFIRMED_DUE[it.title];
+      if(fixed){ it.due = fixed; return; }
+      const away = MOVE_OFF_15[it.title];
+      if(away && (!it.due || it.due === "2026-12-15")) it.due = away;
+    });
   }
 
   /* 실제 시공·설치 전인데 완료로 체크돼 있던 항목은 체크를 풀고 '예약완료'로 표시한다. */
@@ -1006,6 +1178,7 @@
     renderOwnerChips();
     renderSections();
     renderMoneyView();
+    renderTimeline();
   }
 
   function renderProgress(){
@@ -1185,6 +1358,136 @@
   }
   function escAttr(s){ return esc(s); }
 
+  /* ─────────── 날짜별 일정(타임라인) 뷰 ─────────── */
+  /* 12월 핵심 4일 — 늘 맨 위에 한눈에 보여 준다 */
+  const TL_KEY_DAYS = [
+    { due:"2026-12-14", t:"줄눈 시공", m:"11:00 ~ 17:00" },
+    { due:"2026-12-15", t:"일정 없음", m:"비워 둔 날", empty:true },
+    { due:"2026-12-16", t:"입주청소", m:"총 40만 원 · 12/16 시공" },
+    { due:"2026-12-17", t:"이사 · 가구 오전", m:"오후 15:00~18:00 이삿짐", move:true }
+  ];
+  /* 일정을 일부러 비워 둔 날 — 항목이 없어도 카드로 보여 준다 */
+  const TL_EMPTY_DAYS = {
+    "2026-12-15": { title:"일정 없음 — 비워 둔 날", note:"15일은 아무것도 하지 않고 쉬어가는 날로 비워 두었습니다." }
+  };
+  const TL_DAY_NOTE = {
+    "2026-12-17": "🛗 도착지 엘리베이터 15:00 ~ 18:00 예약 — 가구(소파·식탁·침대) 설치는 그 전 오전에 먼저 끝냅니다."
+  };
+
+  const WD_KO = ["일","월","화","수","목","금","토"];
+  function weekdayOf(ymd){ return WD_KO[ymdToUTC(ymd).getUTCDay()]; }
+  function relLabel(ymd, today){
+    const diff = daysBetween(today, ymdToUTC(ymd));
+    if(diff > 0) return "D-" + diff;
+    if(diff === 0) return "오늘";
+    return "D+" + Math.abs(diff);
+  }
+  function hhmmToMin(s){
+    const p = String(s).split(":");
+    return (Number(p[0])||0)*60 + (Number(p[1])||0);
+  }
+  /* 제목·메모에 적힌 시간(오전/오후 포함)을 정렬·표시용으로 뽑아낸다 */
+  function itemTimeOf(i){
+    const hay = (i.title||"") + " " + (i.memo||"");
+    const m = hay.match(/(\d{1,2}:\d{2})\s*[~∼\-–]\s*(\d{1,2}:\d{2})|(오전|오후)/);
+    if(!m) return { label:"", rank: 24*60 };
+    if(m[3]) return { label:m[3], rank: m[3] === "오전" ? 8*60 : 15*60 };
+    return { label:m[1] + " ~ " + m[2], rank: hhmmToMin(m[1]) };
+  }
+
+  function renderTimeline(){
+    const tv = document.getElementById("timelineView");
+    if(!tv) return;
+    const today = kstToday();
+    const dated = state.items.filter(i=>!!i.due);
+    const byDate = {};
+    dated.forEach(i=>{ (byDate[i.due] = byDate[i.due] || []).push(i); });
+    Object.keys(byDate).forEach(d=>{
+      byDate[d].sort((a,b)=>{
+        const ta = itemTimeOf(a), tb = itemTimeOf(b);
+        if(ta.rank !== tb.rank) return ta.rank - tb.rank;
+        if(a.done !== b.done) return a.done ? 1 : -1;
+        if(a.suggested !== b.suggested) return a.suggested ? 1 : -1;
+        return a.title < b.title ? -1 : 1;
+      });
+    });
+    const dates = Object.keys(byDate);
+    Object.keys(TL_EMPTY_DAYS).forEach(d=>{ if(dates.indexOf(d) === -1) dates.push(d); });
+    dates.sort();
+
+    let html = '<div class="mv-head">'
+      + '<div><h2 class="t">📅 날짜별 일정</h2>'
+      + '<p class="s">일정이 잡힌 항목 <b>' + dated.length + '개</b>를 날짜순으로 모았습니다 · 12/14 줄눈 → 12/15 비움 → 12/16 입주청소 → 12/17 이사</p></div>'
+      + '<div class="mv-badge">이사까지<b>' + relLabel(MOVE_DATE, today) + '</b></div>'
+      + '</div>';
+
+    html += '<div class="tl-key">';
+    TL_KEY_DAYS.forEach(k=>{
+      html += '<div class="kc' + (k.empty ? ' empty' : '') + (k.move ? ' move' : '') + '">'
+        + '<div class="d">' + shortDate(k.due) + ' (' + weekdayOf(k.due) + ')<em>' + relLabel(k.due, today) + '</em></div>'
+        + '<div class="t">' + esc(k.t) + '</div>'
+        + '<div class="m">' + esc(k.m) + '</div>'
+        + '</div>';
+    });
+    html += '</div>';
+
+    if(!dates.length){
+      html += '<div class="tl-empty">일정이 잡힌 항목이 없습니다.<br>항목의 ✎ 를 눌러 <b>일정</b>을 적으면 날짜별로 여기에 모입니다.</div>';
+      tv.innerHTML = html;
+      return;
+    }
+
+    html += '<div class="tl-days">';
+    dates.forEach(d=>{
+      const dayItems = byDate[d] || [];
+      const doneN = dayItems.filter(i=>i.done).length;
+      const isMove = d === MOVE_DATE;
+      html += '<section class="tl-day' + (dayItems.length ? '' : ' empty') + (isMove ? ' move' : '') + '">'
+        + '<div class="tl-date"><b>' + shortDate(d) + '</b><span>' + weekdayOf(d) + '요일</span>'
+        +   '<em class="' + (relLabel(d, today) === '오늘' ? 'on' : '') + '">' + relLabel(d, today) + '</em></div>'
+        + '<div class="tl-main">';
+      if(isMove) html += '<span class="tl-movebadge">🚚 이사 당일 · 엘리베이터 15:00 ~ 18:00</span>';
+      if(dayItems.length){
+        html += '<ul class="tl-list">';
+        dayItems.forEach(i=>{ html += timelineItemHTML(i); });
+        html += '</ul>';
+        if(dayItems.length > 1) html += '<div class="tl-daycnt">' + doneN + ' / ' + dayItems.length + ' 완료</div>';
+      } else {
+        const emp = TL_EMPTY_DAYS[d] || { title:"일정 없음", note:"" };
+        html += '<div class="tl-none"><b>' + esc(emp.title) + '</b>'
+          + (emp.note ? '<span>' + esc(emp.note) + '</span>' : '') + '</div>';
+      }
+      if(TL_DAY_NOTE[d]) html += '<p class="tl-note">' + esc(TL_DAY_NOTE[d]) + '</p>';
+      html += '</div></section>';
+    });
+    html += '</div>';
+
+    html += '<div class="tl-foot">'
+      + '<p>🙋 내 항목과 💡 추천 제안을 날짜순으로 함께 보여 줍니다 · 체크박스로 바로 완료 처리하고 ✎ 로 수정할 수 있습니다.</p>'
+      + '<button class="btn" type="button" data-act="backlist">← 체크리스트로 돌아가기</button>'
+      + '</div>';
+
+    tv.innerHTML = html;
+  }
+
+  function timelineItemHTML(i){
+    const t = itemTimeOf(i);
+    return '<li class="tl-item' + (i.done ? ' done' : '') + '" data-id="' + i.id + '">'
+      + '<label class="check"><input type="checkbox" ' + (i.done?'checked':'') + ' data-act="toggle" aria-label="' + escAttr(i.title) + '"><span class="box" aria-hidden="true"></span></label>'
+      + '<div class="tl-body">'
+      +   '<div class="tl-title">'
+      +     (t.label ? '<span class="tl-time">⏰ ' + esc(t.label) + '</span>' : '')
+      +     '<span class="title">' + esc(i.title) + '</span>'
+      +     (i.vendor ? '<span class="vendor" title="업체명">🏢 ' + esc(i.vendor) + '</span>' : '')
+      +     (i.done ? '<span class="tag">✅ 완료</span>' : (i.reserved ? '<span class="tag res" title="예약만 끝남 · 시공·설치 후 체크">📌 예약완료</span>' : ''))
+      +     (i.suggested ? '<span class="tag sug" title="제가 제안한 항목">💡 추천 제안</span>' : '')
+      +   '</div>'
+      +   (i.memo ? '<p class="memo">' + esc(i.memo) + '</p>' : '')
+      + '</div>'
+      + '<button class="icon-btn" type="button" data-act="edit" title="수정" aria-label="' + escAttr(i.title) + ' 수정">✎</button>'
+      + '</li>';
+  }
+
   /* ─────────── 비용·결제 내역 뷰 ─────────── */
   function itemTotal(i){ return Math.max(0, i.paidAmount||0) + Math.max(0, i.remainingAmount||0); }
 
@@ -1249,17 +1552,23 @@
 
   const viewTabs = document.querySelectorAll(".viewtabs .vt");
   function setView(v){
-    ui.view = (v === "money") ? "money" : "list";
+    ui.view = (v === "money" || v === "timeline") ? v : "list";
     const isMoney = ui.view === "money";
+    const isTimeline = ui.view === "timeline";
     document.body.classList.toggle("money-view", isMoney);
+    document.body.classList.toggle("timeline-view", isTimeline);
     const mv = document.getElementById("moneyView");
     if(mv) mv.hidden = !isMoney;
+    const tv = document.getElementById("timelineView");
+    if(tv) tv.hidden = !isTimeline;
     Array.prototype.forEach.call(viewTabs, function(b){
       const on = b.dataset.view === ui.view;
       b.classList.toggle("active", on);
       b.setAttribute("aria-selected", String(on));
     });
-    if(isMoney) renderMoneyView(); else renderSections();
+    if(isMoney) renderMoneyView();
+    else if(isTimeline) renderTimeline();
+    else renderSections();
     try{ window.scrollTo({ top:0, behavior:"smooth" }); }catch(e){ window.scrollTo(0,0); }
   }
 
@@ -1322,6 +1631,28 @@
     if(e.target.closest('[data-act="backlist"]')){ setView("list"); return; }
     const btn = e.target.closest("button[data-edit]");
     if(btn) openModal(btn.dataset.edit);
+  });
+
+  const timelineViewEl = document.getElementById("timelineView");
+  timelineViewEl.addEventListener("click", function(e){
+    if(e.target.closest('[data-act="backlist"]')){ setView("list"); return; }
+    const btn = e.target.closest("button[data-act]");
+    if(!btn) return;
+    const li = btn.closest("li[data-id]");
+    if(!li) return;
+    if(btn.dataset.act === "edit") openModal(li.dataset.id);
+  });
+  timelineViewEl.addEventListener("change", function(e){
+    const cb = e.target.closest('input[data-act="toggle"]');
+    if(!cb) return;
+    const li = cb.closest("li[data-id]");
+    if(!li) return;
+    const item = state.items.find(i=>i.id === li.dataset.id);
+    if(!item) return;
+    item.done = cb.checked;
+    item.doneAt = cb.checked ? new Date().toISOString() : "";
+    save();
+    render();
   });
 
   const qEl = document.getElementById("q");
