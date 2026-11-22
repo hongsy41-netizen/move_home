@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f7fb">
+<title>서율아빠의 이사 준비 대시보드</title>
+<meta name="description" content="2026년 12월 17일 이사 준비 체크리스트 — 행정·서류, 대출·세금, 살 것들, 이사 당일까지 한 번에 점검.">
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --ink:#1c2230;
+    --ink-2:#4a5468;
+    --ink-3:#8a93a6;
+    --line:#e9ecf3;
+    --line-2:#dfe4ee;
+    --accent:#4f6df5;
+    --accent-soft:#eef2ff;
+    --accent-ink:#3852d6;
+    --ok:#0f9d68;
+    --ok-soft:#e8f7f0;
+    --warn:#c2410c;
+    --warn-soft:#fff3ea;
+    --radius:16px;
+    --shadow:0 1px 2px rgba(20,28,45,.05), 0 8px 24px -18px rgba(20,28,45,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(900px 420px at 12% -8%, #eef2ff 0%, rgba(238,242,255,0) 70%),
+      radial-gradient(700px 380px at 96% 0%, #eafaf4 0%, rgba(234,250,244,0) 65%),
+      var(--bg);
+    color:var(--ink);
+    font-family:system-ui,-apple-system,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Noto Sans KR",sans-serif;
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    padding:22px 16px 64px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+
+  /* ── header ── */
+  .top{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .brand{display:flex;align-items:center;gap:13px;min-width:0}
+  .logo{
+    width:46px;height:46px;flex:0 0 46px;border-radius:14px;
+    background:linear-gradient(150deg,#ffffff,#eef2ff);
+    border:1px solid var(--line-2);
+    display:grid;place-items:center;font-size:23px;
+    box-shadow:var(--shadow);
+  }
+  h1{font-size:21px;line-height:1.3;margin:0;letter-spacing:-.02em}
+  .sub{margin:3px 0 0;font-size:13px;color:var(--ink-3)}
+  .sub b{color:var(--ink-2);font-weight:600}
+
+  .dday{
+    display:flex;align-items:baseline;gap:9px;
+    background:linear-gradient(140deg,#ffffff,#eef2ff);
+    border:1px solid #dfe5fb;
+    border-radius:14px;padding:9px 16px;
+    box-shadow:var(--shadow);
+    white-space:nowrap;
+  }
+  .dday .lab{font-size:12px;color:var(--ink-3);font-weight:600}
+  .dday strong{font-size:24px;letter-spacing:-.03em;color:var(--accent-ink);font-weight:800}
+  .dday .note{font-size:12px;color:var(--ink-3)}
+
+  /* ── summary cards ── */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:12px;margin-bottom:12px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:14px 16px;box-shadow:var(--shadow);min-width:0;
+  }
+  .card .k{font-size:11.5px;font-weight:700;letter-spacing:.03em;color:var(--ink-3);text-transform:uppercase;display:flex;align-items:center;gap:6px}
+  .card .v{font-size:17px;font-weight:700;margin-top:5px;letter-spacing:-.02em}
+  .card .s{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+  .route{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+  .route .pt{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+  .route .pt .dot{width:7px;height:7px;border-radius:50%;flex:0 0 7px}
+  .route .pt.from .dot{background:#c3cbe0}
+  .route .pt.to .dot{background:var(--accent)}
+  .route .pt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .route .arrow{margin-left:13px;color:var(--ink-3);font-size:12px;line-height:1}
+
+  /* ── progress ── */
+  .progress-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px 15px;box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .progress-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+  .progress-head .t{font-size:14px;font-weight:700}
+  .progress-head .t span{color:var(--ink-3);font-weight:500;font-size:12.5px;margin-left:6px}
+  .progress-head .pct{font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--accent-ink);line-height:1}
+  .progress-head .pct small{font-size:13px;color:var(--ink-3);font-weight:600;margin-left:2px}
+  .bar{height:10px;border-radius:99px;background:#eef1f8;overflow:hidden;margin-top:11px;border:1px solid #edf0f8}
+  .bar > i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#5b7bff,#8fa8ff);transition:width .45s cubic-bezier(.22,.8,.3,1)}
+  .progress-foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:9px;font-size:12.5px;color:var(--ink-3)}
+  .progress-foot .money{color:var(--ink-2);font-weight:600}
+  .progress-foot .money b{color:var(--ink);font-weight:700}
+
+  /* ── toolbar ── */
+  .toolbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(246,247,251,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    padding:9px 0 10px;margin-bottom:6px;border-bottom:1px solid rgba(233,236,243,.9);
+  }
+  .tb-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .search{
+    flex:1 1 210px;min-width:160px;position:relative;display:flex;align-items:center;
+  }
+  .search input{
+    width:100%;border:1px solid var(--line-2);border-radius:11px;background:#fff;
+    padding:9px 12px 9px 34px;font-size:14px;color:var(--ink);outline:none;
+    font-family:inherit;transition:border-color .15s, box-shadow .15s;
+  }
+  .search input::placeholder{color:#a8b0c0}
+  .search input:focus{border-color:#b9c6f8;box-shadow:0 0 0 3px rgba(79,109,245,.13)}
+  .search .ic{position:absolute;left:11px;font-size:13px;color:#a8b0c0;pointer-events:none}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:6px;justify-content:center;
+    border:1px solid var(--line-2);background:#fff;color:var(--ink-2);
+    border-radius:11px;padding:9px 13px;font-size:13.5px;font-weight:600;
+    cursor:pointer;font-family:inherit;white-space:nowrap;
+    transition:background .15s,border-color .15s,color .15s,transform .06s;
+  }
+  .btn:hover{background:#f7f9ff;border-color:#cfd8f2;color:var(--ink)}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 16px -8px rgba(79,109,245,.9)}
+  .btn.primary:hover{background:#4160ea;border-color:#4160ea;color:#fff}
+  .btn.on{background:var(--accent-soft);border-color:#c8d5fb;color:var(--accent-ink)}
+  .btn.ghost{background:transparent}
+  .btn.danger:hover{background:#fff1f1;border-color:#f6c9c9;color:#b42318}
+
+  .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+  .chip{
+    border:1px solid var(--line-2);background:#fff;border-radius:99px;
+    padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--ink-2);
+    cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;
+    transition:background .15s,border-color .15s,color .15s;
+  }
+  .chip:hover{background:#f7f9ff}
+  .chip .n{font-size:11.5px;color:var(--ink-3);font-weight:700}
+  .chip.active{background:var(--ink);border-color:var(--ink);color:#fff}
+  .chip.active .n{color:rgba(255,255,255,.72)}
+
+  /* ── sections ── */
+  section.cat{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin:12px 0;overflow:hidden;
+  }
+  .cat-head{
+    display:flex;align-items:center;gap:10px;padding:14px 18px 12px;
+    border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fcfdff,#fff);
+  }
+  .cat-head .ic{font-size:17px;line-height:1}
+  .cat-head h2{font-size:15px;margin:0;letter-spacing:-.01em}
+  .cat-head .sub{font-size:12px;color:var(--ink-3);margin:1px 0 0}
+  .cat-head .spacer{flex:1}
+  .cat-head .cnt{
+    font-size:12px;font-weight:700;color:var(--ink-2);background:#f3f5fa;
+    border:1px solid var(--line);border-radius:99px;padding:3px 10px;white-space:nowrap;
+  }
+  .cat-head .cnt.full{background:var(--ok-soft);border-color:#c6edd9;color:#0b7a51}
+  .cat-title{min-width:0}
+  .cat-title .row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+
+  ul.items{list-style:none;margin:0;padding:6px 8px 8px}
+  li.item{
+    display:flex;align-items:flex-start;gap:11px;
+    padding:10px 10px;border-radius:12px;
+    transition:background .12s;
+  }
+  li.item:hover{background:#fafbff}
+  li.item + li.item{border-top:1px solid #f4f6fb}
+  li.item.done{opacity:.72}
+  li.item.done .title{text-decoration:line-through;text-decoration-thickness:1px;color:var(--ink-3)}
+
+  .check{position:relative;display:flex;padding-top:2px;cursor:pointer;flex:0 0 auto}
+  .check input{position:absolute;opacity:0;width:22px;height:22px;margin:0;cursor:pointer}
+  .check .box{
+    width:20px;height:20px;border-radius:6px;border:1.6px solid #cfd6e6;background:#fff;
+    display:grid;place-items:center;transition:background .15s,border-color .15s;
+  }
+  .check .box::after{
+    content:"";width:10px;height:6px;border-left:2px solid #fff;border-bottom:2px solid #fff;
+    transform:rotate(-45deg) translate(1px,-1px) scale(.4);opacity:0;transition:opacity .12s,transform .12s;
+  }
+  .check input:checked + .box{background:var(--ok);border-color:var(--ok)}
+  .check input:checked + .box::after{opacity:1;transform:rotate(-45deg) translate(1px,-1px) scale(1)}
+  .check input:focus-visible + .box{box-shadow:0 0 0 3px rgba(79,109,245,.22)}
+
+  .body{flex:1;min-width:0}
+  .title-row{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .title{font-size:14.5px;font-weight:650;color:var(--ink);letter-spacing:-.01em;word-break:keep-all}
+  .tag{
+    font-size:11px;font-weight:700;border-radius:6px;padding:1px 7px;letter-spacing:.01em;
+    background:var(--ok-soft);color:#0b7a51;border:1px solid #c9eeda;
+  }
+  .due{font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 7px;background:#f3f5fa;color:var(--ink-3);border:1px solid var(--line)}
+  .due.soon{background:var(--warn-soft);color:var(--warn);border-color:#fadfc9}
+  .memo{margin:3px 0 0;font-size:12.8px;color:var(--ink-3);line-height:1.5;word-break:keep-all}
+  .amt{font-size:13px;font-weight:700;color:var(--ink-2);white-space:nowrap;padding-top:2px;font-variant-numeric:tabular-nums}
+  .acts{display:flex;gap:2px;flex:0 0 auto;opacity:.55;transition:opacity .12s}
+  li.item:hover .acts, li.item:focus-within .acts{opacity:1}
+  .icon-btn{
+    border:0;background:transparent;color:var(--ink-3);border-radius:8px;
+    width:28px;height:28px;display:grid;place-items:center;cursor:pointer;font-size:13px;
+    font-family:inherit;transition:background .12s,color .12s;
+  }
+  .icon-btn:hover{background:#eef1f8;color:var(--ink)}
+  .icon-btn.del:hover{background:#fff0f0;color:#b42318}
+
+  .empty{
+    background:var(--card);border:1px dashed var(--line-2);border-radius:var(--radius);
+    padding:42px 20px;text-align:center;color:var(--ink-3);font-size:14px;margin:14px 0;
+  }
+  .empty .big{font-size:30px;display:block;margin-bottom:8px}
+
+  footer{margin-top:26px;font-size:12px;color:#9aa3b4;line-height:1.7}
+  footer b{color:var(--ink-2)}
+  .saved{font-size:11.5px;color:#a2aabb;margin-left:2px}
+  .saved.flash{color:var(--ok)}
+
+  /* ── modal ── */
+  .modal-bg{
+    display:none;position:fixed;inset:0;background:rgba(22,28,42,.42);
+    backdrop-filter:blur(3px);z-index:80;padding:18px;align-items:center;justify-content:center;
+  }
+  .modal-bg.open{display:flex}
+  .modal{
+    background:#fff;border-radius:18px;width:100%;max-width:470px;
+    box-shadow:0 30px 70px -20px rgba(16,24,40,.45);border:1px solid var(--line);
+    max-height:92vh;overflow:auto;animation:pop .16s ease-out;
+  }
+  @keyframes pop{from{transform:translateY(8px) scale(.985);opacity:0}to{transform:none;opacity:1}}
+  .modal header{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:16px 18px 12px;border-bottom:1px solid var(--line);
+  }
+  .modal h3{margin:0;font-size:16px;letter-spacing:-.01em}
+  .modal form{padding:14px 18px 18px;display:flex;flex-direction:column;gap:12px}
+  .fld{display:flex;flex-direction:column;gap:5px;font-size:12.5px;font-weight:700;color:var(--ink-2)}
+  .fld input,.fld select,.fld textarea{
+    font-family:inherit;font-size:14px;font-weight:400;color:var(--ink);
+    border:1px solid var(--line-2);border-radius:10px;padding:9px 11px;background:#fff;outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  .fld input:focus,.fld select:focus,.fld textarea:focus{border-color:#b9c6f8;box-shadow:0 0 0 3px rgba(79,109,245,.13)}
+  .fld textarea{resize:vertical;min-height:64px;line-height:1.5}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .hint{font-size:11.5px;font-weight:400;color:var(--ink-3);margin:0}
+  .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:2px}
+
+  @media (max-width:560px){
+    body{padding:16px 12px 56px;font-size:14.5px}
+    h1{font-size:19px}
+    .dday{padding:7px 13px}
+    .dday strong{font-size:21px}
+    .cards{grid-template-columns:1fr 1fr;gap:9px}
+    .card{padding:12px 13px}
+    .card .v{font-size:15.5px}
+    .card.wide{grid-column:1 / -1}
+    .progress-head .pct{font-size:22px}
+    .cat-head{padding:12px 14px 10px}
+    ul.items{padding:4px 4px 6px}
+    li.item{padding:9px 8px;gap:9px}
+    .acts{opacity:1}
+    .amt{font-size:12px}
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .toolbar,.acts,.dday,.modal-bg,footer .noprint{display:none!important}
+    section.cat{box-shadow:none;break-inside:avoid}
+    .card,.progress-card{box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">🏠</div>
+      <div>
+        <h1>서율아빠의 이사 준비 대시보드</h1>
+        <p class="sub"><b>2026.12.17 (목)</b> · 매봉로123 본동삼성래미안 → 동작시그니저 아파트</p>
+      </div>
+    </div>
+    <div class="dday" id="ddayBox" title="이사일까지 남은 날">
+      <span class="lab">이사까지</span>
+      <strong id="ddayNum">D-24</strong>
+      <span class="note" id="ddayNote">2026.12.17 (목)</span>
+    </div>
+  </header>
+
+  <section class="cards" aria-label="이사 요약">
+    <div class="card">
+      <div class="k">📅 이사일</div>
+      <div class="v">2026. 12. 17 (목)</div>
+      <div class="s" id="daysLeftSub">이사까지 24일</div>
+    </div>
+
+    <div class="card wide">
+      <div class="k">🚚 이동 경로</div>
+      <div class="route">
+        <div class="pt from"><span class="dot"></span><span class="nm">매봉로123 본동삼성래미안</span></div>
+        <div class="arrow">↓</div>
+        <div class="pt to"><span class="dot"></span><span class="nm">동작시그니저 아파트</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="k">🛗 도착지 엘리베이터</div>
+      <div class="v">15:00 ~ 18:00</div>
+      <div class="s">예약 완료 · 당일 재확인</div>
+    </div>
+
+    <div class="card">
+      <div class="k">✅ 전체 진행률</div>
+      <div class="v" id="cardPct">0%</div>
+      <div class="s" id="cardDone">0 / 0 항목 완료</div>
+    </div>
+  </section>
+
+  <section class="progress-card" aria-label="전체 완료율">
+    <div class="progress-head">
+      <div class="t">전체 완료율 <span id="progCount">0 / 0</span></div>
+      <div class="pct"><span id="progPct">0</span><small>%</small></div>
+    </div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progBar"><i id="progFill"></i></div>
+    <div class="progress-foot">
+      <span id="progMsg">체크리스트를 불러오는 중…</span>
+      <span class="money" id="progMoney"></span>
+    </div>
+  </section>
+
+  <div class="toolbar">
+    <div class="tb-row">
+      <div class="search">
+        <span class="ic" aria-hidden="true">🔍</span>
+        <input id="q" type="search" placeholder="항목·메모 검색 (예: 전입, 잔금, 커튼)" aria-label="항목 검색" autocomplete="off">
+      </div>
+      <button class="btn" id="btnOnlyTodo" type="button" aria-pressed="false">미완료만</button>
+      <button class="btn primary" id="btnAdd" type="button">＋ 항목 추가</button>
+      <button class="btn" id="btnExport" type="button" title="JSON 파일로 백업">⬇ 백업</button>
+      <button class="btn" id="btnImport" type="button" title="JSON 백업 불러오기">⬆ 불러오기</button>
+      <button class="btn ghost danger" id="btnReset" type="button" title="기본 체크리스트로 되돌리기">↺ 초기화</button>
+      <input type="file" id="fileImport" accept="application/json,.json" hidden>
+    </div>
+    <div class="chips" id="chips" role="tablist" aria-label="카테고리 필터"></div>
+  </div>
+
+  <main id="sections"></main>
+
+  <footer>
+    <div><b>자동 저장</b> — 이 브라우저(localStorage)에만 저장됩니다. 기기를 바꾸거나 기록이 지워질 때를 대비해 <b>⬇ 백업</b>으로 JSON을 받아 두세요. <span class="saved" id="savedAt"></span></div>
+    <div class="noprint">🔒 동·호수, 전화번호, 계좌번호 같은 민감한 정보는 넣지 마세요. 이 페이지는 공개 주소로 열립니다.</div>
+  </footer>
+</div>
+
+<!-- 항목 추가/수정 -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <header>
+      <h3 id="modalTitle">항목 추가</h3>
+      <button class="icon-btn" id="modalClose" type="button" aria-label="닫기">✕</button>
+    </header>
+    <form id="itemForm">
+      <label class="fld">카테고리
+        <select id="fCat"></select>
+      </label>
+      <label class="fld">항목명
+        <input id="fTitle" type="text" required maxlength="90" placeholder="예: 전입신고" autocomplete="off">
+      </label>
+      <label class="fld">메모
+        <textarea id="fMemo" maxlength="400" placeholder="준비물·연락처·주의사항 (연락처·계좌번호는 넣지 마세요)"></textarea>
+      </label>
+      <div class="row2">
+        <label class="fld">금액 (원)
+          <input id="fAmount" type="number" min="0" step="1000" placeholder="0" inputmode="numeric">
+        </label>
+        <label class="fld">일정
+          <input id="fDue" type="date">
+        </label>
+      </div>
+      <p class="hint">금액은 예상 비용으로 합계에 잡히고, 항목을 완료 체크하면 지출로 집계됩니다.</p>
+      <div class="modal-actions">
+        <button class="btn ghost" id="modalCancel" type="button">취소</button>
+        <button class="btn primary" type="submit">저장</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ─────────── 설정 ─────────── */
+  const MOVE_DATE = "2026-12-17";
+  const STORAGE_KEY = "moving-dashboard-v1";
+  const DATA_VERSION = 1;
+
+  const CATS = [
+    { id:"vendor",  icon:"🔧", name:"업체·시공·설치", hint:"업체 통해 예약·진행한 항목과 추가 시공" },
+    { id:"admin",   icon:"📄", name:"행정·서류",       hint:"이사 후 14일·30일·60일 기한을 놓치지 않게" },
+    { id:"finance", icon:"💰", name:"대출·세금·금융",  hint:"매매·전세 여부에 따라 해당되는 항목만 체크" },
+    { id:"buy",     icon:"🛒", name:"살 것들·가전·가구", hint:"필요한 것만 추가하고 예산을 함께 적어두기" },
+    { id:"day",     icon:"📦", name:"이사 당일·직전",  hint:"전날·당일 아침에 한 번에 훑어보기" }
+  ];
+
+  /* ─────────── 기본 체크리스트 ─────────── */
+  function defaults(){
+    const d = (cat,title,memo,amount,due,done) => ({ id:uid(), cat, title, memo:memo||"", amount:amount||0, due:due||"", done:!!done, doneAt:done?new Date().toISOString():"" });
+    return [
+      /* 업체·시공·설치 — 이미 완료 */
+      d("vendor","줄눈","업체 통해 완료",0,"",true),
+      d("vendor","거실 무타공 TV","업체 통해 완료",0,"",true),
+      d("vendor","사전점검","업체 통해 완료",0,"",true),
+      d("vendor","입주청소","업체 통해 완료",0,"",true),
+      d("vendor","인터넷 이전설치","업체 통해 완료",0,"",true),
+      d("vendor","음식물처리기","업체 통해 완료",0,"",true),
+      /* 업체·시공·설치 — 추가로 챙길 것 */
+      d("vendor","에어컨 이전설치 예약","이전 설치비·배관 길이 추가 요금 미리 확인",0,"2026-12-10"),
+      d("vendor","세탁기·건조기 설치","도착지 배수·전원 위치 확인, 설치 기사 방문 시간 조율",0,"2026-12-15"),
+      d("vendor","커튼·블라인드 시공","거실·안방·서율이 방 창 치수 실측 후 주문",0,"2026-12-05"),
+      d("vendor","조명 교체·추가","거실·주방·현관 위주, 필요하면 업체 견적",0,"2026-12-08"),
+      d("vendor","도어락 교체","시공 가능 여부·비밀번호 변경까지 함께",0,"2026-12-16"),
+      d("vendor","정수기·비데 이전설치","구독 업체에 주소 이전 요청",0,"2026-12-12"),
+
+      /* 행정·서류 */
+      d("admin","전입신고","이사 후 14일 이내 · 정부24 또는 동주민센터",0,"2026-12-18"),
+      d("admin","확정일자 받기","전입신고와 함께 처리하면 한 번에 끝남",0,"2026-12-18"),
+      d("admin","임대차 신고","보증금·월세 조건에 따라 30일 이내 신고 대상 여부 확인",0,"2027-01-16"),
+      d("admin","우편물 주소 이전","인터넷우체국 주소이전서비스 신청 (약 7일 소요)",0,"2026-12-10"),
+      d("admin","구 집 관리비 정산","이사 당일 검침 후 관리사무소 정산",0,"2026-12-17"),
+      d("admin","도시가스 해지·승계","구 집 해지 / 새 집 승계 신청, 전출·전입 검침일 확인",0,"2026-12-15"),
+      d("admin","전기 해지·승계","한전 123 또는 앱에서 이사일 검침 예약",0,"2026-12-15"),
+      d("admin","수도 해지·승계","상하수도사업소에 이사일 검침 신청",0,"2026-12-15"),
+      d("admin","자동차 주소 변경","자동차등록증 · 30일 이내 미이행 시 과태료",0,"2026-12-24"),
+      d("admin","자동차 보험 주소 변경","보험사 앱 또는 콜센터, 주차 위치 변경도 함께",0,"2026-12-18"),
+      d("admin","건강보험 주소 변경","건강보험공단 1577-1000 또는 The건강보험 앱",0,"2026-12-24"),
+      d("admin","서율이 전학 절차","새 학교 배정·전입학 서류, 겨울방학 일정 함께 확인",0,"2026-12-18"),
+      d("admin","은행·카드사 주소 변경","우편물 수령 주소 위주로 정리",0,"2026-12-31"),
+      d("admin","온라인 쇼핑 배송지 변경","쿠팡·마켓컬리 등 기본 배송지, 이사 당일 주문 중지",0,"2026-12-14"),
+      d("admin","새 집 주차 등록","관리사무소에 차량 등록·주차 스티커 신청",0,"2026-12-17"),
+
+      /* 대출·세금·금융 */
+      d("finance","잔금 납부 · 이체 한도 확인","한도 상향은 영업일 기준 며칠 걸릴 수 있어 미리 신청",0,"2026-12-17"),
+      d("finance","주택담보·전세자금 대출 실행","실행일·인출 조건·필요 서류 은행과 최종 확인",0,"2026-12-17"),
+      d("finance","취득세·지방교육세 신고·납부","취득일부터 60일 이내 · 위택스 또는 구청",0,"2027-02-15"),
+      d("finance","등기 접수 · 법무사 비용","잔금일 접수, 등기필증 수령 방법 확인",0,"2026-12-17"),
+      d("finance","중개수수료(복비) 지급","요율표로 금액 미리 계산해 두기",0,"2026-12-17"),
+      d("finance","장기수선충당금 정산","매도인·매수인 정산 금액 관리사무소에서 확인",0,"2026-12-17"),
+      d("finance","관리비 예치금·선수관리비","입주 시 납부 항목과 금액 확인",0,"2026-12-17"),
+      d("finance","근저당 설정 확인","대출 실행 후 등기부에 설정 여부 확인",0,"2026-12-22"),
+      d("finance","주택화재보험 가입","대출 조건이면 필수, 보장 범위 비교",0,"2026-12-16"),
+
+      /* 살 것들·가전·가구 */
+      d("buy","홈카페 아일랜드 세팅","리타 BA 자리·콘센트 위치, 60×210 아일랜드 기준 배치",0,"2026-12-10"),
+      d("buy","욕실 환풍기(휴젠뜨 대체)","샤오미 욕바 등 후보 비교, 설치 방식 확인",0,"2026-12-12"),
+      d("buy","분리수거함","스테인레스 3구, 주방 동선에 맞는 크기",0,"2026-12-12"),
+      d("buy","현관 신발장·수납 정리용품","새 집 치수 실측 후 주문",0,"2026-12-12"),
+      d("buy","청소·생활용품","세제·걸레·쓰레기봉투·건전지 등 첫날 필요한 것",0,"2026-12-16"),
+
+      /* 이사 당일·직전 */
+      d("day","이삿짐 업체 최종 확인","방문 시간·짐 목록·추가 요금 없는지 통화로 확인",0,"2026-12-16"),
+      d("day","엘리베이터 예약 15:00~18:00 재확인","도착지 관리사무소에 전날·당일 아침 두 번 확인",0,"2026-12-17"),
+      d("day","출발지 엘리베이터·주차 자리","구 집 관리사무소에 사용 시간 미리 알리기",0,"2026-12-16"),
+      d("day","공과금 계량기 사진 촬영","전기·수도·가스 계량기, 이사 직전에 찍어 두기",0,"2026-12-17"),
+      d("day","열쇠·카드키·음식물카드 반납","구 집 반납 / 새 집 수령 목록 확인",0,"2026-12-17"),
+      d("day","도어락 비밀번호 변경","입주 직후 바로 변경",0,"2026-12-17"),
+      d("day","귀중품·서류 따로 챙기기","계약서·등기·여권·현금은 직접 들고 이동",0,"2026-12-17"),
+      d("day","냉장고 비우기·해동","전날 밤에 음식 정리, 문 열어 두고 이동",0,"2026-12-16"),
+      d("day","세탁기 물 빼기","잔수 제거 후 이동, 호스 분리",0,"2026-12-17"),
+      d("day","공유기·셋톱박스 반납","구 집 통신 장비 반납, 새 집 설치 일정 확인",0,"2026-12-17"),
+      d("day","짐 검수·파손 확인","이삿짐 목록과 대조, 파손은 당일 사진 남기기",0,"2026-12-17"),
+      d("day","새 집 하자 사진 남기기","입주 직후 벽·바닥·수전 상태 촬영",0,"2026-12-17")
+    ];
+  }
+
+  function uid(){
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "i" + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
+  }
+
+  /* ─────────── 상태 ─────────── */
+  let state = { v:DATA_VERSION, items:[] };
+  const ui = { q:"", cat:"all", onlyTodo:false };
+
+  function load(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){
+        const p = JSON.parse(raw);
+        if(p && Array.isArray(p.items)){
+          state = { v:DATA_VERSION, items:p.items.map(normalize) };
+          return;
+        }
+      }
+    }catch(e){ /* 손상된 저장값은 기본값으로 대체 */ }
+    state = { v:DATA_VERSION, items:defaults() };
+    save();
+  }
+  function normalize(i){
+    return {
+      id: i.id || uid(),
+      cat: CATS.some(c=>c.id===i.cat) ? i.cat : "admin",
+      title: String(i.title||"").slice(0,90),
+      memo: String(i.memo||"").slice(0,400),
+      amount: Number(i.amount)||0,
+      due: /^\d{4}-\d{2}-\d{2}$/.test(i.due||"") ? i.due : "",
+      done: !!i.done,
+      doneAt: i.doneAt || (i.done ? new Date().toISOString() : "")
+    };
+  }
+  function save(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ v:DATA_VERSION, items:state.items, savedAt:new Date().toISOString() }));
+      flashSaved();
+    }catch(e){
+      const el = document.getElementById("savedAt");
+      if(el){ el.textContent = "저장 실패 — 브라우저 저장 공간을 확인해 주세요"; }
+    }
+  }
+  let flashTimer = null;
+  function flashSaved(){
+    const el = document.getElementById("savedAt");
+    if(!el) return;
+    el.textContent = "저장됨 " + timeLabel(new Date());
+    el.classList.add("flash");
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(()=>el.classList.remove("flash"), 1200);
+  }
+  function timeLabel(d){
+    return String(d.getHours()).padStart(2,"0") + ":" + String(d.getMinutes()).padStart(2,"0");
+  }
+
+  /* ─────────── 날짜 유틸 ─────────── */
+  function kstToday(){
+    const p = new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Seoul",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+    const [y,m,d] = p.split("-").map(Number);
+    return new Date(Date.UTC(y,m-1,d));
+  }
+  function ymdToUTC(s){
+    const [y,m,d] = s.split("-").map(Number);
+    return new Date(Date.UTC(y,m-1,d));
+  }
+  function daysBetween(from,to){
+    return Math.round((to.getTime()-from.getTime())/86400000);
+  }
+  function won(n){
+    if(!n) return "";
+    return n.toLocaleString("ko-KR") + "원";
+  }
+  function shortDate(s){
+    const p = s.split("-");
+    return Number(p[1]) + "." + Number(p[2]);
+  }
+
+  /* ─────────── D-Day ─────────── */
+  function renderDday(){
+    const today = kstToday();
+    const target = ymdToUTC(MOVE_DATE);
+    const left = daysBetween(today, target);
+    const num = document.getElementById("ddayNum");
+    const note = document.getElementById("ddayNote");
+    const box = document.getElementById("ddayBox");
+    const sub = document.getElementById("daysLeftSub");
+    if(left > 0){
+      num.textContent = "D-" + left;
+      note.textContent = "2026.12.17 (목)";
+      sub.textContent = "이사까지 " + left + "일";
+    }else if(left === 0){
+      num.textContent = "D-DAY";
+      note.textContent = "오늘이 이사날";
+      sub.textContent = "오늘 · 엘리베이터 15:00~18:00";
+      box.style.background = "linear-gradient(140deg,#ffffff,#eafaf4)";
+      box.style.borderColor = "#c6edd9";
+      num.style.color = "#0b7a51";
+    }else{
+      num.textContent = "D+" + Math.abs(left);
+      note.textContent = "이사 완료";
+      sub.textContent = "이사 " + Math.abs(left) + "일 지남";
+      box.style.background = "linear-gradient(140deg,#ffffff,#f4f6fb)";
+      num.style.color = "#6b7688";
+    }
+  }
+
+  /* ─────────── 렌더 ─────────── */
+  function matches(i){
+    if(ui.onlyTodo && i.done) return false;
+    if(ui.cat !== "all" && i.cat !== ui.cat) return false;
+    if(ui.q){
+      const hay = (i.title + " " + i.memo).toLowerCase();
+      if(!hay.includes(ui.q)) return false;
+    }
+    return true;
+  }
+
+  function sorted(list){
+    return list.slice().sort((a,b)=>{
+      if(a.done !== b.done) return a.done ? 1 : -1;
+      if(a.due && b.due && a.due !== b.due) return a.due < b.due ? -1 : 1;
+      if(a.due && !b.due) return -1;
+      if(!a.due && b.due) return 1;
+      return 0;
+    });
+  }
+
+  function render(){
+    renderDday();
+    renderProgress();
+    renderChips();
+    renderSections();
+  }
+
+  function renderProgress(){
+    const total = state.items.length;
+    const done = state.items.filter(i=>i.done).length;
+    const pct = total ? Math.round(done/total*100) : 0;
+    document.getElementById("progCount").textContent = done + " / " + total;
+    document.getElementById("progPct").textContent = pct;
+    document.getElementById("cardPct").textContent = pct + "%";
+    document.getElementById("cardDone").textContent = done + " / " + total + " 항목 완료";
+    const fill = document.getElementById("progFill");
+    fill.style.width = pct + "%";
+    const bar = document.getElementById("progBar");
+    bar.setAttribute("aria-valuenow", String(pct));
+
+    const budget = state.items.reduce((s,i)=>s+(i.amount||0),0);
+    const spent = state.items.filter(i=>i.done).reduce((s,i)=>s+(i.amount||0),0);
+    document.getElementById("progMoney").innerHTML = budget
+      ? "예상 비용 <b>" + won(budget) + "</b>" + (spent ? " · 지출 완료 <b>" + won(spent) + "</b>" : "")
+      : "";
+
+    let msg;
+    if(!total) msg = "항목이 없습니다. ＋ 항목 추가로 시작해 보세요.";
+    else if(done === total) msg = "모두 완료 🎉 이제 이사만 남았습니다.";
+    else msg = "남은 항목 " + (total-done) + "개 · 오늘 처리할 것부터 위에 모아 두었습니다.";
+    document.getElementById("progMsg").textContent = msg;
+  }
+
+  function renderChips(){
+    const box = document.getElementById("chips");
+    const total = state.items.length;
+    const done = state.items.filter(i=>i.done).length;
+    let html = chipHTML("all","전체",done,total,"🗂");
+    CATS.forEach(c=>{
+      const list = state.items.filter(i=>i.cat===c.id);
+      html += chipHTML(c.id,c.name,list.filter(i=>i.done).length,list.length,c.icon);
+    });
+    box.innerHTML = html;
+  }
+  function chipHTML(id,label,done,total,icon){
+    const active = ui.cat === id ? " active" : "";
+    return '<button class="chip'+active+'" type="button" role="tab" aria-selected="'+(ui.cat===id)+'" data-cat="'+id+'">'
+      + '<span aria-hidden="true">'+icon+'</span>'+label
+      + '<span class="n">'+done+'/'+total+'</span></button>';
+  }
+
+  function renderSections(){
+    const root = document.getElementById("sections");
+    const today = kstToday();
+    let html = "";
+    let shown = 0;
+
+    CATS.forEach(cat=>{
+      const all = state.items.filter(i=>i.cat===cat.id);
+      const list = sorted(all.filter(matches));
+      if(!list.length) return;
+      shown += list.length;
+      const doneCount = all.filter(i=>i.done).length;
+      const full = all.length > 0 && doneCount === all.length;
+
+      html += '<section class="cat" data-cat="'+cat.id+'">'
+        + '<div class="cat-head">'
+        +   '<span class="ic" aria-hidden="true">'+cat.icon+'</span>'
+        +   '<div class="cat-title"><div class="row"><h2>'+esc(cat.name)+'</h2></div>'
+        +     '<p class="sub">'+esc(cat.hint)+'</p></div>'
+        +   '<span class="spacer"></span>'
+        +   '<span class="cnt'+(full?' full':'')+'">'+doneCount+' / '+all.length+'</span>'
+        + '</div><ul class="items">';
+
+      list.forEach(i=>{
+        html += itemHTML(i, today);
+      });
+
+      html += '</ul></section>';
+    });
+
+    if(!shown){
+      const searching = ui.q || ui.onlyTodo || ui.cat !== "all";
+      html = '<div class="empty"><span class="big">'+(searching?'🔎':'🌱')+'</span>'
+        + (searching ? '조건에 맞는 항목이 없습니다. 검색어나 필터를 바꿔 보세요.' : '아직 항목이 없습니다. <b>＋ 항목 추가</b>로 하나씩 채워 보세요.')
+        + '</div>';
+    }
+    root.innerHTML = html;
+  }
+
+  function itemHTML(i, today){
+    const cls = i.done ? "item done" : "item";
+    let dueHTML = "";
+    if(i.due){
+      let dcls = "due";
+      let label = shortDate(i.due);
+      if(!i.done){
+        const diff = daysBetween(today, ymdToUTC(i.due));
+        if(diff < 0){ dcls = "due soon"; label = shortDate(i.due) + " 지남"; }
+        else if(diff === 0){ dcls = "due soon"; label = "오늘"; }
+        else if(diff <= 3){ dcls = "due soon"; label = shortDate(i.due) + " (D-" + diff + ")"; }
+      }
+      dueHTML = '<span class="'+dcls+'" title="일정 '+i.due+'">📅 '+label+'</span>';
+    }
+    return '<li class="'+cls+'" data-id="'+i.id+'">'
+      + '<label class="check"><input type="checkbox" '+(i.done?'checked':'')+' data-act="toggle" aria-label="'+escAttr(i.title)+' 완료">'
+      +   '<span class="box" aria-hidden="true"></span></label>'
+      + '<div class="body">'
+      +   '<div class="title-row">'
+      +     '<span class="title">'+esc(i.title)+'</span>'
+      +     (i.done ? '<span class="tag">완료</span>' : '')
+      +     dueHTML
+      +   '</div>'
+      +   (i.memo ? '<p class="memo">'+esc(i.memo)+'</p>' : '')
+      + '</div>'
+      + (i.amount ? '<div class="amt">'+won(i.amount)+'</div>' : '')
+      + '<div class="acts">'
+      +   '<button class="icon-btn" type="button" data-act="edit" title="수정" aria-label="'+escAttr(i.title)+' 수정">✎</button>'
+      +   '<button class="icon-btn del" type="button" data-act="del" title="삭제" aria-label="'+escAttr(i.title)+' 삭제">🗑</button>'
+      + '</div></li>';
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function escAttr(s){ return esc(s); }
+
+  /* ─────────── 이벤트 ─────────── */
+  const sectionsEl = document.getElementById("sections");
+
+  sectionsEl.addEventListener("click", function(e){
+    const btn = e.target.closest("button[data-act]");
+    if(btn){
+      const li = btn.closest("li[data-id]");
+      if(!li) return;
+      const id = li.dataset.id;
+      if(btn.dataset.act === "edit") openModal(id);
+      if(btn.dataset.act === "del") removeItem(id);
+    }
+  });
+
+  sectionsEl.addEventListener("change", function(e){
+    const cb = e.target.closest('input[data-act="toggle"]');
+    if(!cb) return;
+    const li = cb.closest("li[data-id]");
+    if(!li) return;
+    const item = state.items.find(i=>i.id === li.dataset.id);
+    if(!item) return;
+    item.done = cb.checked;
+    item.doneAt = cb.checked ? new Date().toISOString() : "";
+    save();
+    render();
+  });
+
+  document.getElementById("chips").addEventListener("click", function(e){
+    const chip = e.target.closest(".chip");
+    if(!chip) return;
+    ui.cat = chip.dataset.cat;
+    render();
+  });
+
+  const qEl = document.getElementById("q");
+  qEl.addEventListener("input", function(){
+    ui.q = qEl.value.trim().toLowerCase();
+    renderSections();
+  });
+
+  const onlyBtn = document.getElementById("btnOnlyTodo");
+  onlyBtn.addEventListener("click", function(){
+    ui.onlyTodo = !ui.onlyTodo;
+    onlyBtn.classList.toggle("on", ui.onlyTodo);
+    onlyBtn.setAttribute("aria-pressed", String(ui.onlyTodo));
+    onlyBtn.textContent = ui.onlyTodo ? "전체 보기" : "미완료만";
+    renderSections();
+  });
+
+  /* ── 추가/수정 모달 ── */
+  const modalBg = document.getElementById("modalBg");
+  const form = document.getElementById("itemForm");
+  const fCat = document.getElementById("fCat");
+  const fTitle = document.getElementById("fTitle");
+  const fMemo = document.getElementById("fMemo");
+  const fAmount = document.getElementById("fAmount");
+  const fDue = document.getElementById("fDue");
+  let editingId = null;
+
+  fCat.innerHTML = CATS.map(c=>'<option value="'+c.id+'">'+c.icon+" "+esc(c.name)+'</option>').join("");
+
+  function openModal(id){
+    editingId = id || null;
+    const it = id ? state.items.find(i=>i.id===id) : null;
+    document.getElementById("modalTitle").textContent = it ? "항목 수정" : "항목 추가";
+    if(it){
+      fCat.value = it.cat;
+      fTitle.value = it.title;
+      fMemo.value = it.memo || "";
+      fAmount.value = it.amount ? it.amount : "";
+      fDue.value = it.due || "";
+    }else{
+      fCat.value = ui.cat !== "all" ? ui.cat : "admin";
+      fTitle.value = "";
+      fMemo.value = "";
+      fAmount.value = "";
+      fDue.value = "";
+    }
+    modalBg.classList.add("open");
+    setTimeout(()=>fTitle.focus(), 40);
+  }
+  function closeModal(){
+    modalBg.classList.remove("open");
+    editingId = null;
+  }
+
+  document.getElementById("btnAdd").addEventListener("click", ()=>openModal(null));
+  document.getElementById("modalClose").addEventListener("click", closeModal);
+  document.getElementById("modalCancel").addEventListener("click", closeModal);
+  modalBg.addEventListener("mousedown", function(e){ if(e.target === modalBg) closeModal(); });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && modalBg.classList.contains("open")) closeModal();
+  });
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    const title = fTitle.value.trim();
+    if(!title){ fTitle.focus(); return; }
+    const payload = {
+      cat: fCat.value,
+      title: title.slice(0,90),
+      memo: fMemo.value.trim().slice(0,400),
+      amount: Math.max(0, Number(fAmount.value)||0),
+      due: fDue.value || ""
+    };
+    if(editingId){
+      const it = state.items.find(i=>i.id===editingId);
+      if(it){
+        Object.assign(it, payload);
+      }
+    }else{
+      state.items.unshift(Object.assign({ id:uid(), done:false, doneAt:"" }, payload));
+      ui.q = ""; qEl.value = "";
+    }
+    save();
+    closeModal();
+    render();
+  });
+
+  function removeItem(id){
+    const it = state.items.find(i=>i.id===id);
+    if(!it) return;
+    if(!confirm('"' + it.title + '" 항목을 삭제할까요?')) return;
+    state.items = state.items.filter(i=>i.id !== id);
+    save();
+    render();
+  }
+
+  /* ── 백업 / 복원 / 초기화 ── */
+  document.getElementById("btnExport").addEventListener("click", function(){
+    const data = { app:"moving-dashboard", version:DATA_VERSION, exportedAt:new Date().toISOString(), items:state.items };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type:"application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const d = new Date();
+    a.href = url;
+    a.download = "이사-체크리스트-" + d.getFullYear()
+      + String(d.getMonth()+1).padStart(2,"0") + String(d.getDate()).padStart(2,"0") + ".json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+  });
+
+  const fileImport = document.getElementById("fileImport");
+  document.getElementById("btnImport").addEventListener("click", ()=>fileImport.click());
+  fileImport.addEventListener("change", function(){
+    const file = fileImport.files && fileImport.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(){
+      try{
+        const parsed = JSON.parse(String(reader.result));
+        const arr = Array.isArray(parsed) ? parsed : (parsed && Array.isArray(parsed.items) ? parsed.items : null);
+        if(!arr || !arr.length) throw new Error("empty");
+        const cleaned = arr.map(normalize).filter(i=>i.title);
+        if(!cleaned.length) throw new Error("empty");
+        if(!confirm("백업 파일의 항목 " + cleaned.length + "개로 현재 목록을 교체할까요?\n현재 목록은 사라집니다. (먼저 ⬇ 백업을 받아 두시면 안전합니다.)")){
+          fileImport.value = "";
+          return;
+        }
+        state.items = cleaned;
+        save();
+        render();
+        alert("불러왔습니다 — " + cleaned.length + "개 항목");
+      }catch(err){
+        alert("불러오지 못했습니다. 이 대시보드에서 내보낸 JSON 파일인지 확인해 주세요.");
+      }
+      fileImport.value = "";
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById("btnReset").addEventListener("click", function(){
+    if(!confirm("기본 체크리스트로 되돌립니다.\n추가·수정·체크한 내용이 모두 사라집니다. 계속할까요?")) return;
+    state.items = defaults();
+    ui.cat = "all"; ui.q = ""; ui.onlyTodo = false;
+    qEl.value = "";
+    onlyBtn.classList.remove("on");
+    onlyBtn.setAttribute("aria-pressed","false");
+    onlyBtn.textContent = "미완료만";
+    save();
+    render();
+  });
+
+  /* ─────────── 시작 ─────────── */
+  load();
+  render();
+})();
+</script>
+</body>
+</html>
