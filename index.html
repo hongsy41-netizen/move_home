@@ -496,7 +496,7 @@
   /* ─────────── 설정 ─────────── */
   const MOVE_DATE = "2026-12-17";
   const STORAGE_KEY = "moving-dashboard-v1";
-  const DATA_VERSION = 2;
+  const DATA_VERSION = 3;
 
   const CATS = [
     { id:"vendor",  icon:"🔧", name:"업체·시공·설치", hint:"업체 통해 예약·진행한 항목과 추가 시공" },
@@ -506,13 +506,43 @@
     { id:"day",     icon:"📦", name:"이사 당일·직전",  hint:"전날·당일 아침에 한 번에 훑어보기" }
   ];
 
+  /* ─────────── 실제 계약금·잔금 내역 (기본 체크리스트에 반영) ─────────── */
+  const COSTS = {
+    "줄눈": { paidAmount:65000, remainingAmount:585000,
+      memo:"욕실 바닥 에폭시·벽면 3면 폴리·주방 실리콘 패키지 (총 65만, 잔금 보름 전 연락)" },
+    "거실 무타공 TV": { vendor:"윙티비", paidAmount:0, remainingAmount:240000,
+      memo:"무타공 설치 총 24만 원" },
+    "입주청소": { paidAmount:0, remainingAmount:400000,
+      memo:"총 40만 원 (업체 통해 완료)" },
+    "세탁기·건조기 설치": { paidAmount:0, remainingAmount:3700000,
+      memo:"총 370만 원 — 워시타워 (결제 완료·잔금 구분 필요 시 수정)" },
+    "이삿짐 업체 최종 확인": { vendor:"한미", paidAmount:100000, remainingAmount:1700000,
+      memo:"6톤, 사다리차 29만 원 포함 (총 180만) · 방문 시간·짐 목록·추가 요금 통화 확인" },
+    "쾌존": { vendor:"쾌존", paidAmount:50000, remainingAmount:1200000,
+      memo:"총 125만 원 (선입금 5만 / 잔금 120만)" },
+    "가구 (소파·식탁·침대)": { vendor:"리안데코", paidAmount:1000000, remainingAmount:5500000,
+      memo:"쇼파 250 · 식탁 149 · 침대 269 (총 717만 → 650만 할인)" },
+    "커피머신 (웬두지 리타 BA)": { paidAmount:2150000, remainingAmount:0,
+      memo:"215만 원 결제 완료" }
+  };
+  /* 이미 저장된 예전 데이터에 새로 더해 줄 항목 (사용자가 지운 항목은 되살리지 않음) */
+  const SEED_V3_ADD = ["쾌존", "가구 (소파·식탁·침대)", "커피머신 (웬두지 리타 BA)"];
+  /* 메모 문구가 바뀐 항목의 예전 기본 메모 — 사용자가 직접 고친 메모는 덮어쓰지 않기 위해 */
+  const OLD_MEMO = {
+    "줄눈": "업체 통해 완료",
+    "거실 무타공 TV": "업체 통해 완료",
+    "입주청소": "업체 통해 완료",
+    "세탁기·건조기 설치": "도착지 배수·전원 위치 확인, 설치 기사 방문 시간 조율",
+    "이삿짐 업체 최종 확인": "방문 시간·짐 목록·추가 요금 없는지 통화로 확인"
+  };
+
   /* ─────────── 기본 체크리스트 ─────────── */
   function defaults(){
     const d = (cat,title,memo,amount,due,done,opt) => Object.assign({
       id:uid(), cat, title, memo:memo||"",
       vendor:"", paidAmount:0, remainingAmount:0,
       due:due||"", done:!!done, doneAt:done?new Date().toISOString():""
-    }, opt||{});
+    }, COSTS[title] || {}, opt || {});
     return [
       /* 업체·시공·설치 — 이미 완료 */
       d("vendor","줄눈","업체 통해 완료",0,"",true),
@@ -521,6 +551,7 @@
       d("vendor","입주청소","업체 통해 완료",0,"",true),
       d("vendor","인터넷 이전설치","업체 통해 완료",0,"",true),
       d("vendor","음식물처리기","업체 통해 완료",0,"",true),
+      d("vendor","쾌존","",0,"",false),
       /* 업체·시공·설치 — 추가로 챙길 것 */
       d("vendor","에어컨 이전설치 예약","이전 설치비·배관 길이 추가 요금 미리 확인",0,"2026-12-10"),
       d("vendor","세탁기·건조기 설치","도착지 배수·전원 위치 확인, 설치 기사 방문 시간 조율",0,"2026-12-15"),
@@ -562,6 +593,8 @@
 
       /* 살 것들·가전·가구 */
       d("buy","홈카페 아일랜드 세팅","리타 BA 자리·콘센트 위치, 60×210 아일랜드 기준 배치",0,"2026-12-10"),
+      d("buy","커피머신 (웬두지 리타 BA)","",0,"",true),
+      d("buy","가구 (소파·식탁·침대)","",0,"",false),
       d("buy","욕실 환풍기(휴젠뜨 대체)","샤오미 욕바 등 후보 비교, 설치 방식 확인",0,"2026-12-12"),
       d("buy","분리수거함","스테인레스 3구, 주방 동선에 맞는 크기",0,"2026-12-12"),
       d("buy","현관 신발장·수납 정리용품","새 집 치수 실측 후 주문",0,"2026-12-12"),
@@ -598,13 +631,46 @@
       if(raw){
         const p = JSON.parse(raw);
         if(p && Array.isArray(p.items)){
-          state = { v:DATA_VERSION, items:p.items.map(normalize) };
+          const version = Number(p.v) || 1;
+          const items = p.items.map(normalize);
+          if(version < 3) migrateToV3(items);
+          state = { v:DATA_VERSION, items:items };
+          if(version < DATA_VERSION) save();
           return;
         }
       }
     }catch(e){ /* 손상된 저장값은 기본값으로 대체 */ }
     state = { v:DATA_VERSION, items:defaults() };
     save();
+  }
+
+  /* v2 이하 저장값에 실제 계약금·잔금·업체명을 채워 넣는다.
+     사용자가 직접 넣은 값(업체명·금액·고친 메모)은 건드리지 않는다. */
+  function migrateToV3(items){
+    const seed = defaults();
+    const seedByTitle = {};
+    seed.forEach(s=>{ seedByTitle[s.title] = s; });
+
+    items.forEach(it=>{
+      const s = seedByTitle[it.title];
+      if(!s) return;
+      const untouched = !it.vendor && !it.paidAmount && !it.remainingAmount;
+      if(!untouched) return;
+      it.vendor = s.vendor || "";
+      it.paidAmount = s.paidAmount || 0;
+      it.remainingAmount = s.remainingAmount || 0;
+      const oldMemo = OLD_MEMO[it.title];
+      if(s.memo && (!it.memo || it.memo === oldMemo)) it.memo = s.memo;
+    });
+
+    SEED_V3_ADD.forEach(title=>{
+      if(items.some(i=>i.title === title)) return;
+      const s = seedByTitle[title];
+      if(!s) return;
+      items.unshift({ id:uid(), cat:s.cat, title:s.title, vendor:s.vendor||"", memo:s.memo||"",
+        paidAmount:s.paidAmount||0, remainingAmount:s.remainingAmount||0, due:s.due||"",
+        done:!!s.done, doneAt:s.done?new Date().toISOString():"" });
+    });
   }
   function normalize(i){
     /* 예전 버전 호환 — 단일 금액(amount)만 있던 항목은 낸 돈/앞으로 낼 돈으로 옮긴다.
