@@ -701,7 +701,8 @@
     const d = (cat,title,memo,amount,due,done,opt) => Object.assign({
       id:uid(), cat, title, memo:memo||"",
       vendor:"", paidAmount:0, remainingAmount:0,
-      due:due||"", done:!!done, reserved:false,
+      due:due||"", done:!!done,
+      reserved: RESERVED_TITLES.indexOf(title) !== -1,
       suggested: OWN_TITLES.indexOf(title) === -1,
       doneAt:done?new Date().toISOString():""
     }, COSTS[title] || {}, opt || {});
