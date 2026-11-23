@@ -392,6 +392,52 @@
   .mv-note b{color:var(--ink)}
   .mv-note .warnline{color:#b45309;font-weight:600}
   .mv-empty{padding:40px 22px;text-align:center;color:var(--ink-3);font-size:15px;line-height:1.6}
+  .mv-sub-h{padding:16px 22px 2px;font-size:14.5px;font-weight:800;color:var(--ink-2);letter-spacing:-.01em}
+  .mv-sub-h span{font-weight:600;color:var(--ink-3);font-size:12.5px;margin-left:4px}
+
+  /* ── 12/17 입주 자금 계획 ── */
+  .fund{padding:18px 22px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#f8faff,#fff 45%)}
+  .fund-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .fund-head h3{margin:0;font-size:18px;letter-spacing:-.02em}
+  .fund-head p{margin:6px 0 0;font-size:13px;color:var(--ink-3);line-height:1.6;max-width:640px}
+  .fund-head p b{color:var(--ink-2);font-weight:700}
+  .fund-badge{font-size:12.5px;color:var(--ink-3);text-align:right;white-space:nowrap;line-height:1.5}
+  .fund-badge b{display:block;font-size:21px;color:var(--accent-ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .fund-seq{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:14px 0 2px}
+  .fund-seq .fs{
+    font-size:12.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
+    border:1px solid #d8e0fd;border-radius:8px;padding:4px 9px;line-height:1.35;
+  }
+  .fund-seq .ar{color:#b9c2d8;font-size:12px}
+  .fund-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);gap:12px;margin-top:12px}
+  .fund-box{border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:#fff;min-width:0}
+  .fund-box h4{margin:0 0 9px;font-size:14px;font-weight:800;letter-spacing:-.01em}
+  .fund-box h4 b{margin-left:6px;font-variant-numeric:tabular-nums}
+  .fund-box.in{border-color:#cbead9;background:linear-gradient(180deg,#fff,#f4fbf7)}
+  .fund-box.in h4 b{color:#0b7a51}
+  .fund-box ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .fund-box ul li{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:14px;color:var(--ink-2);line-height:1.45}
+  .fund-box ul li span{min-width:0;word-break:keep-all;overflow-wrap:anywhere}
+  .fund-box ul li b{font-variant-numeric:tabular-nums;white-space:nowrap;color:#0b7a51;font-size:14.5px}
+  .fund-box.out{border-color:#f7e2cf;background:linear-gradient(180deg,#fff,#fffaf5)}
+  .fund-box.out h4 b{color:#b45309;font-size:13.5px}
+  table.fund-t{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  table.fund-t td{padding:6px 0;font-size:13.5px;border-top:1px solid #f4f6fb;vertical-align:top}
+  table.fund-t tr:first-child td{border-top:0}
+  table.fund-t td.n{width:18px;color:var(--ink-3);font-size:12px;font-weight:700}
+  table.fund-t td.nm{color:var(--ink);font-weight:600;line-height:1.4;word-break:keep-all}
+  table.fund-t td.nm em{display:block;font-style:normal;font-size:11.5px;color:var(--ink-3);font-weight:600;margin-top:1px}
+  table.fund-t td.amt{text-align:right;white-space:nowrap;font-weight:700;color:var(--ink-2);font-size:13.5px}
+  table.fund-t tr.est td.amt{color:#b45309;font-weight:600}
+  .fund-sum{margin-top:12px;border:1px solid #dfe5fb;border-radius:14px;background:linear-gradient(140deg,#ffffff,#eef2ff);padding:13px 16px}
+  .fund-sum dl{display:grid;grid-template-columns:1fr auto;gap:5px 14px;margin:0;font-size:13.5px;align-items:baseline}
+  .fund-sum dt{color:var(--ink-2);font-weight:600;word-break:keep-all}
+  .fund-sum dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:700;white-space:nowrap}
+  .fund-sum .net{margin-top:9px;padding-top:10px;border-top:1px dashed #c9d4f7;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .fund-sum .net span{font-size:13.5px;font-weight:700;color:var(--ink-2)}
+  .fund-sum .net b{font-size:20px;font-weight:800;color:#0b7a51;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .fund-note{margin:9px 0 0;font-size:12px;color:var(--ink-3);line-height:1.6;word-break:keep-all}
+  .fund-note b{color:var(--ink-2);font-variant-numeric:tabular-nums}
 
   /* ── 날짜별 일정 뷰 ── */
   .timeline-view{
@@ -442,6 +488,10 @@
     font-size:12px;font-weight:800;color:#0b6b8a;background:#eaf6fb;border:1px solid #bfe3f0;
     border-radius:6px;padding:1px 7px;white-space:nowrap;font-variant-numeric:tabular-nums;
   }
+  .tl-seq{
+    font-size:11.5px;font-weight:800;color:#0b7a51;background:var(--ok-soft);border:1px solid #c9eeda;
+    border-radius:6px;padding:1px 7px;white-space:nowrap;
+  }
   .tl-none{
     border:1px dashed var(--line-2);border-radius:12px;padding:14px 16px;background:#fafbff;
     display:flex;flex-direction:column;gap:3px;
@@ -478,6 +528,16 @@
     .tl-foot{padding:14px 16px}
     .tl-undated{padding:0 16px}
     .tl-undated ul{grid-template-columns:1fr}
+  }
+
+  @media (max-width:680px){
+    .fund{padding:16px 16px 18px}
+    .fund-cols{grid-template-columns:1fr}
+    .fund-badge{text-align:left}
+    .mv-sub-h{padding:14px 16px 2px}
+    table.fund-t td{font-size:13px}
+    .fund-sum dl{font-size:13px}
+    .fund-sum .net b{font-size:18px}
   }
 
   @media (max-width:680px){
@@ -556,7 +616,7 @@
       <div class="logo" aria-hidden="true">🏠</div>
       <div>
         <h1>서율아빠의 이사 준비 대시보드</h1>
-        <p class="sub"><b>2026.12.17 (목)</b> · 매봉로123 본동삼성래미안 → 동작시그니저 아파트</p>
+        <p class="sub"><b>2026.12.17 (목)</b> · 매봉로123 본동삼성래미안 → 힐스테이트 동작시그니처</p>
       </div>
     </div>
     <div class="dday" id="ddayBox" title="이사일까지 남은 날">
@@ -578,7 +638,7 @@
       <div class="route">
         <div class="pt from"><span class="dot"></span><span class="nm">매봉로123 본동삼성래미안</span></div>
         <div class="arrow">↓</div>
-        <div class="pt to"><span class="dot"></span><span class="nm">동작시그니저 아파트</span></div>
+        <div class="pt to"><span class="dot"></span><span class="nm">힐스테이트 동작시그니처</span></div>
       </div>
     </div>
 
@@ -611,7 +671,7 @@
     <div class="ms-head">
       <div>
         <div class="t">💰 이사 비용</div>
-        <div class="s" id="msDept">🏦 잔금대출 약 9억 원은 은행 미정 → 메모에만 표시 · 합계 제외</div>
+        <div class="s" id="msDept">🏦 12/17 입주 자금(분양대금·중도금 상환·주담대 9억)은 💰 비용 탭 「12/17 입주 자금 계획」에서 따로 봅니다 · 아래 합계 제외</div>
       </div>
       <button class="more" id="btnMoneyView" type="button">💰 비용·결제 내역 →</button>
     </div>
@@ -729,7 +789,7 @@
   /* ─────────── 설정 ─────────── */
   const MOVE_DATE = "2026-12-17";
   const STORAGE_KEY = "moving-dashboard-v1";
-  const DATA_VERSION = 9;
+  const DATA_VERSION = 10;
 
   /* 성윤 님이 직접 말씀하신(이미 정해 둔) 항목 — 나머지 기본 항목은 '💡 추천 제안'으로 구분한다. */
   const OWN_TITLES = [
@@ -737,8 +797,9 @@
     "세탁기·건조기 설치", "홈카페 아일랜드 세팅", "커피머신 (웬두지 리타 BA)", "가구 (소파·식탁·침대)",
     "조명 — 아르떼미데 톨로메오 메가 플로어",
     "밥솥", "에어프라이기", "수건", "서율방 매트리스 커버", "안방 TV 이동형 거치대",
-    "중도금 이자 상환", "중도금 완납 증명서 발급",
-    "주택담보(잔금)대출 은행 비교·선정 및 실행", "조합 잔금 납부 및 추가 납부금 확인",
+    "전세 보증금 2억 원 수령",
+    "중도금대출 원금·이자 상환 (상도중앙새마을금고)", "중도금 완납 증명서 발급",
+    "주택담보(잔금)대출 은행 비교·선정 및 실행", "분양대금·옵션·기타입주비용·관리비예치금 납부",
     "이삿짐 업체 최종 확인", "엘리베이터 예약 15:00~18:00 재확인"
   ];
   /* 실제 시공·설치 전인데 예약만 끝난 항목 — 완료 체크 대신 '예약완료'로 표시 */
@@ -747,7 +808,7 @@
   const CATS = [
     { id:"vendor",  icon:"🔧", name:"업체·시공·설치", hint:"업체 통해 예약·진행한 항목과 추가 시공" },
     { id:"admin",   icon:"📄", name:"행정·서류",       hint:"이사 후 14일·30일·60일 기한을 놓치지 않게" },
-    { id:"finance", icon:"💰", name:"대출·세금·금융",  hint:"중도금·조합 잔금 → 대출 실행 → 취득세·등기 순서" },
+    { id:"finance", icon:"💰", name:"대출·세금·금융",  hint:"12/17 보증금 수령 → 주담대 실행 → 중도금 상환 → 잔금·기타 납부 → 취득세·등기" },
     { id:"buy",     icon:"🛒", name:"살 것들·가전·가구", hint:"필요한 것만 추가하고 예산을 함께 적어두기" },
     { id:"day",     icon:"📦", name:"이사 당일·직전",  hint:"전날·당일 아침에 한 번에 훑어보기" }
   ];
@@ -773,6 +834,29 @@
     "커피머신 (웬두지 리타 BA)": { paidAmount:2150000, remainingAmount:0,
       memo:"215만 원 결제 완료" }
   };
+  /* ─────────── 12/17 입주 자금 계획 (억 단위 — 시공·이사 비용 합계와 분리) ─────────── */
+  const FUND = {
+    deposit: 200000000,   /* 본동삼성래미안 전세 보증금 */
+    loan: 900000000,      /* 주택담보(잔금)대출 예정 */
+    tax: 25000000,        /* 취득세·등기비 등 (예상) */
+    intMin: 650000,       /* 중도금 12월 추가이자 (12/1~17일분) */
+    intMax: 1100000,      /* 11/20 납입 이후 정산 기준 */
+    out: [
+      { t:"분양대금",            where:"현대건설",                  amt:465130000 },
+      { t:"옵션대금 잔금 (80%)",  where:"현대건설",                  amt:8432000 },
+      { t:"중도금대출 원금",      where:"상도중앙새마을금고 · 3.86%",   amt:383910000 },
+      { t:"중도금 12월 추가이자", where:"상도중앙새마을금고",           min:650000, max:1100000, est:true },
+      { t:"기타 입주비용",       where:"무궁화신탁",                amt:54810000 },
+      { t:"중도금 대납 이자 (11/30 기준)", where:"무궁화신탁",        amt:57834879 },
+      { t:"관리비예치금",        where:"관리사무소",                amt:614000 },
+      { t:"취득세·등기비 등 (예상)", where:"구청·법무사",             amt:25000000, est:true }
+    ],
+    day: [
+      { t:"가구 잔금 (12/17 오전 배송·설치)", amt:5500000 },
+      { t:"이사 잔금 (한미 6톤·사다리차)",     amt:1700000 }
+    ]
+  };
+
   /* 이미 저장된 예전 데이터에 새로 더해 줄 항목 (사용자가 지운 항목은 되살리지 않음) */
   const SEED_V3_ADD = ["쾌존", "가구 (소파·식탁·침대)", "커피머신 (웬두지 리타 BA)"];
   /* 업체명 정정 — 이미 저장된 항목에도 반영 */
@@ -784,7 +868,13 @@
     "입주청소": "2026-12-16",
     "가구 (소파·식탁·침대)": "2026-12-17",
     "이삿짐 업체 최종 확인": "2026-12-17",
-    "엘리베이터 예약 15:00~18:00 재확인": "2026-12-17"
+    "엘리베이터 예약 15:00~18:00 재확인": "2026-12-17",
+    /* 12/17 입주 안내문·성윤 님 지시로 확정된 자금 일정 */
+    "전세 보증금 2억 원 수령": "2026-12-17",
+    "주택담보(잔금)대출 은행 비교·선정 및 실행": "2026-12-17",
+    "중도금대출 원금·이자 상환 (상도중앙새마을금고)": "2026-12-17",
+    "중도금 완납 증명서 발급": "2026-12-17",
+    "분양대금·옵션·기타입주비용·관리비예치금 납부": "2026-12-17"
   };
   /* v8까지 기본값으로 넣어 두었던 날짜 — 저장값에 남아 있으면 비운다(성윤 님이 말씀한 적 없음). */
   const V8_SEED_DUE = {
@@ -881,12 +971,13 @@
       d("admin","온라인 쇼핑 배송지 변경","쿠팡·마켓컬리 등 기본 배송지, 이사 당일 주문 중지",0,""),
       d("admin","새 집 주차 등록","관리사무소에 차량 등록·주차 스티커 신청",0,""),
 
-      /* 대출·세금·금융 */
+      /* 대출·세금·금융 — 12/17 입주 자금 순서(보증금 수령 → 주담대 → 중도금 상환 → 잔금·기타) */
+      d("finance","전세 보증금 2억 원 수령","본동삼성래미안 · 12/17 당일 1순위로 수령 (+200,000,000원)",0,"2026-12-17"),
       d("finance","잔금 이체 한도 상향 신청","약 9억 원 이체 대비 · 은행 1일 이체한도와 창구 사전 예약 확인",0,""),
-      d("finance","중도금 이자 상환","새마을금고 상도중앙본점 (금액 체크 필요)",0,""),
-      d("finance","중도금 완납 증명서 발급","새마을금고 상도중앙본점 중도금·이자 상환 후 수령",0,""),
-      d("finance","주택담보(잔금)대출 은행 비교·선정 및 실행","약 9억 원 규모 예정, 은행 미정 · 금리·한도·인지세·근저당 조건 비교",0,""),
-      d("finance","조합 잔금 납부 및 추가 납부금 확인","조합 잔금 및 추가 납부 금액 확인 필요",0,""),
+      d("finance","주택담보(잔금)대출 은행 비교·선정 및 실행","약 9억 원 예정 · 은행 미정 · 보증금 수령 후 2순위 실행",0,"2026-12-17"),
+      d("finance","중도금대출 원금·이자 상환 (상도중앙새마을금고)","원금 383,910,000원 · 금리 3.86% · 12월 추가이자 약 65~110만 원(11/20 납입 이후 정산 확인)",0,"2026-12-17"),
+      d("finance","중도금 완납 증명서 발급","상도중앙새마을금고 상환 후 수령",0,"2026-12-17"),
+      d("finance","분양대금·옵션·기타입주비용·관리비예치금 납부","분양대금 465,130,000 + 옵션잔금 8,432,000(현대건설) / 기타입주비용 54,810,000 + 대납이자 57,834,879(무궁화신탁) / 관리비예치금 614,000(관리사무소) · 총 586,820,879원",0,"2026-12-17"),
       d("finance","취득세·지방교육세 신고·납부","취득일부터 60일 이내 · 위택스 또는 구청, 조합 분양 취득가액 기준",0,""),
       d("finance","등기 접수 · 법무사 비용","잔금일 접수, 등기필증 수령 방법 확인",0,""),
       d("finance","중개수수료(복비) 지급","부동산 중개로 계약한 경우에만 해당 (조합 분양이면 없음)",0,""),
@@ -999,6 +1090,72 @@
     applyDueCleanup(items);
     applyLightFix(items);
     applyBuyFix(items);
+    applyFundPlan(items);
+  }
+
+  /* v10 — 12/17 입주 자금 계획(분양대금·중도금 상환·전세 보증금·주담대).
+     억 단위 자금은 '낸 돈/앞으로 낼 돈'에 넣지 않는다(시공·이사 비용 1,855만 원 합계를 흔들지 않게).
+     항목명이 바뀐 두 항목은 새 이름으로 받고, 같은 이름이 이미 있으면 하나로 합진다. */
+  const FUND_RENAME = {
+    "중도금 이자 상환": "중도금대출 원금·이자 상환 (상도중앙새마을금고)",
+    "조합 잔금 납부 및 추가 납부금 확인": "분양대금·옵션·기타입주비용·관리비예치금 납부"
+  };
+  const FUND_OLD_MEMO = {
+    "중도금대출 원금·이자 상환 (상도중앙새마을금고)": ["새마을금고 상도중앙본점 (금액 체크 필요)"],
+    "중도금 완납 증명서 발급": ["새마을금고 상도중앙본점 중도금·이자 상환 후 수령"],
+    "주택담보(잔금)대출 은행 비교·선정 및 실행": ["약 9억 원 규모 예정, 은행 미정 · 금리·한도·인지세·근저당 조건 비교", "약 9억 원 예정, 은행 미정 · 금리·한도·인지세·근저당 조건 비교"],
+    "분양대금·옵션·기타입주비용·관리비예치금 납부": ["조합 잔금 및 추가 납부 금액 확인 필요"]
+  };
+  const FUND_TITLES = [
+    "전세 보증금 2억 원 수령",
+    "주택담보(잔금)대출 은행 비교·선정 및 실행",
+    "중도금대출 원금·이자 상환 (상도중앙새마을금고)",
+    "중도금 완납 증명서 발급",
+    "분양대금·옵션·기타입주비용·관리비예치금 납부"
+  ];
+  function applyFundPlan(items){
+    const seed = defaults();
+    const seedByTitle = {};
+    seed.forEach(s=>{ seedByTitle[s.title] = s; });
+
+    /* 1) 항목명 변경 — 같은 이름이 이미 있으면 중복 없이 하나만 남긴다. */
+    Object.keys(FUND_RENAME).forEach(oldTitle=>{
+      const newTitle = FUND_RENAME[oldTitle];
+      items.slice().forEach(it=>{
+        if(it.title !== oldTitle) return;
+        const dup = items.filter(x=>x.title === newTitle && x !== it)[0];
+        if(dup){
+          /* 이미 새 이름 항목이 있으면, 건드리지 않은 예전 항목만 정리하고
+             성윤 님이 직접 고치거나 체크한 항목은 그대로 둔다. */
+          const oldMemo = FUND_OLD_MEMO[newTitle] || [];
+          const untouched = !it.done && !(it.paidAmount||0) && !(it.remainingAmount||0)
+            && (!it.memo || oldMemo.indexOf(it.memo) !== -1);
+          if(untouched) items.splice(items.indexOf(it), 1);
+          return;
+        }
+        it.title = newTitle;
+        it.cat = "finance";
+        it.suggested = false;
+      });
+    });
+
+    /* 2) 12/17 확정 일정·메모·내 항목 표시 — 성윤 님이 고친 메모는 덮지 않는다. */
+    FUND_TITLES.forEach(title=>{
+      const s = seedByTitle[title];
+      if(!s) return;
+      let it = items.filter(i=>i.title === title)[0];
+      if(!it){
+        items.unshift(Object.assign({}, s, { id:uid(), done:false, doneAt:"" }));
+        return;
+      }
+      it.cat = "finance";
+      it.due = s.due || it.due;
+      it.suggested = false;
+      it.paidAmount = 0;
+      it.remainingAmount = 0;
+      const olds = FUND_OLD_MEMO[title] || [];
+      if(s.memo && (!it.memo || olds.indexOf(it.memo) !== -1)) it.memo = s.memo;
+    });
   }
 
   /* 성윤 님이 '살 것들'로 말한 추가 품목 — 저장값에 없으면 넣는다. */
@@ -1417,17 +1574,27 @@
     { due:"2026-12-14", t:"줄눈 시공", m:"11:00 ~ 17:00" },
     { due:"2026-12-15", t:"일정 없음", m:"비워 둔 날", empty:true },
     { due:"2026-12-16", t:"입주청소", m:"총 40만 원 · 12/16 시공" },
-    { due:"2026-12-17", t:"이사 · 가구 오전", m:"오후 15:00~18:00 이삿짐", move:true }
+    { due:"2026-12-17", t:"이사 · 가구 오전", m:"자금 정산 → 가구 → 15:00 이삿짐", move:true }
   ];
   /* 일정을 일부러 비워 둔 날 — 항목이 없어도 카드로 보여 준다 */
   const TL_EMPTY_DAYS = {
     "2026-12-15": { title:"일정 없음 — 비워 둔 날", note:"15일은 아무것도 하지 않고 쉬어가는 날로 비워 두었습니다." }
   };
   const TL_DAY_NOTE = {
-    "2026-12-17": "🛗 도착지 엘리베이터 15:00 ~ 18:00 예약 — 가구(소파·식탁·침대) 설치는 그 전 오전에 먼저 끝냅니다."
+    "2026-12-17": "🛗 도착지 엘리베이터 15:00 ~ 18:00 예약 — 가구(소파·식탁·침대) 설치는 그 전 오전에 먼저 끝냅니다. · 🏦 자금은 ① 보증금 2억 수령 → ② 주담대 9억 실행 → ③ 중도금 383,910,000원 상환·완납증명서 → ④ 잔금·기타 586,820,879원 납부 순서로 움직입니다."
   };
 
   const WD_KO = ["일","월","화","수","목","금","토"];
+
+  /* 12/17 당일 자금 순서 — 목록에서도 이 순서대로 보이게 한다. */
+  const FUND_SEQ = {
+    "전세 보증금 2억 원 수령": { n:1, chip:"① 보증금 수령" },
+    "주택담보(잔금)대출 은행 비교·선정 및 실행": { n:2, chip:"② 주담대 실행" },
+    "중도금대출 원금·이자 상환 (상도중앙새마을금고)": { n:3, chip:"③ 중도금 상환" },
+    "중도금 완납 증명서 발급": { n:4, chip:"④ 완납증명서" },
+    "분양대금·옵션·기타입주비용·관리비예치금 납부": { n:5, chip:"⑤ 잔금·기타 납부" }
+  };
+
   function weekdayOf(ymd){ return WD_KO[ymdToUTC(ymd).getUTCDay()]; }
   function relLabel(ymd, today){
     const diff = daysBetween(today, ymdToUTC(ymd));
@@ -1457,6 +1624,11 @@
     dated.forEach(i=>{ (byDate[i.due] = byDate[i.due] || []).push(i); });
     Object.keys(byDate).forEach(d=>{
       byDate[d].sort((a,b)=>{
+        const sa = FUND_SEQ[a.title], sb = FUND_SEQ[b.title];
+        if(sa || sb){
+          if(sa && sb) return sa.n - sb.n;
+          return sa ? -1 : 1;
+        }
         const ta = itemTimeOf(a), tb = itemTimeOf(b);
         if(ta.rank !== tb.rank) return ta.rank - tb.rank;
         if(a.done !== b.done) return a.done ? 1 : -1;
@@ -1537,11 +1709,12 @@
 
   function timelineItemHTML(i){
     const t = itemTimeOf(i);
+    const seq = FUND_SEQ[i.title];
     return '<li class="tl-item' + (i.done ? ' done' : '') + '" data-id="' + i.id + '">'
       + '<label class="check"><input type="checkbox" ' + (i.done?'checked':'') + ' data-act="toggle" aria-label="' + escAttr(i.title) + '"><span class="box" aria-hidden="true"></span></label>'
       + '<div class="tl-body">'
       +   '<div class="tl-title">'
-      +     (t.label ? '<span class="tl-time">⏰ ' + esc(t.label) + '</span>' : '')
+      +     (seq ? '<span class="tl-seq">' + esc(seq.chip) + '</span>' : (t.label ? '<span class="tl-time">⏰ ' + esc(t.label) + '</span>' : ''))
       +     '<span class="title">' + esc(i.title) + '</span>'
       +     (i.vendor ? '<span class="vendor" title="업체명">🏢 ' + esc(i.vendor) + '</span>' : '')
       +     (i.done ? '<span class="tag">✅ 완료</span>' : (i.reserved ? '<span class="tag res" title="예약만 끝남 · 시공·설치 후 체크">📌 예약완료</span>' : ''))
@@ -1556,6 +1729,73 @@
   /* ─────────── 비용·결제 내역 뷰 ─────────── */
   function itemTotal(i){ return Math.max(0, i.paidAmount||0) + Math.max(0, i.remainingAmount||0); }
 
+  /* ── 12/17 입주 자금 계획 카드 ── */
+  function manwon(n){ return Math.round(n/10000).toLocaleString("ko-KR") + "만 원"; }
+  function eokText(n){
+    const e = Math.floor(n/100000000);
+    const m = Math.round((n % 100000000)/10000);
+    if(!e) return manwon(n);
+    return e + "억" + (m ? " " + m.toLocaleString("ko-KR") + "만" : "") + " 원";
+  }
+  function fundNumbers(){
+    const inflow = FUND.deposit + FUND.loan;
+    const trust = FUND.out.filter(o=>!o.est).reduce((s,o)=> s + (o.amt||0), 0);
+    const dayPay = FUND.day.reduce((s,o)=> s + o.amt, 0);
+    const outMin = trust + FUND.tax + FUND.intMin;
+    const outMax = trust + FUND.tax + FUND.intMax;
+    return {
+      inflow: inflow, trust: trust, dayPay: dayPay,
+      outMin: outMin, outMax: outMax,
+      netMin: inflow - outMax - dayPay,
+      netMax: inflow - outMin - dayPay
+    };
+  }
+  function fundPlanHTML(){
+    const n = fundNumbers();
+    const rows = FUND.out.map(function(o,i){
+      const est = !!o.est;
+      const val = o.min ? (manwon(o.min) + " ~ " + manwon(o.max))
+                        : (est ? "약 " + manwon(o.amt) : won(o.amt));
+      return '<tr' + (est ? ' class="est"' : '') + '>'
+        + '<td class="n">' + (i+1) + '</td>'
+        + '<td class="nm">' + esc(o.t) + (o.where ? '<em>' + esc(o.where) + '</em>' : '') + '</td>'
+        + '<td class="amt">' + val + '</td></tr>';
+    }).join("");
+    const netRound = Math.round((n.netMin + n.netMax)/2/10000)*10000;
+
+    return '<div class="fund">'
+      + '<div class="fund-head">'
+      +   '<div class="fund-t"><h3>🏦 12/17 입주 자금 계획</h3>'
+      +   '<p>2026.12.17(목) 하루에 들어오고 나가는 돈입니다. 분양대금·중도금 상환·주담대 9억은 아래 <b>시공·가구·이사 비용(1,855만 원)</b>과 따로 계산합니다.</p></div>'
+      +   '<div class="fund-badge">들어올 돈<b>' + eokText(n.inflow) + '</b>전세 보증금 2억 + 주담대 예정 9억</div>'
+      + '</div>'
+      + '<div class="fund-seq">'
+      +   '<span class="fs">① 전세 보증금 2억 수령</span><span class="ar">→</span>'
+      +   '<span class="fs">② 주담대 9억 실행</span><span class="ar">→</span>'
+      +   '<span class="fs">③ 중도금 383,910,000 상환·완납증명서</span><span class="ar">→</span>'
+      +   '<span class="fs">④ 잔금·기타 586,820,879 납부</span>'
+      + '</div>'
+      + '<div class="fund-cols">'
+      +   '<section class="fund-box in"><h4>💵 들어올 돈<b>' + won(n.inflow) + '</b></h4><ul>'
+      +     '<li><span>본동삼성래미안 전세 보증금</span><b>+' + won(FUND.deposit) + '</b></li>'
+      +     '<li><span>주택담보(잔금)대출 (예정)</span><b>+' + won(FUND.loan) + '</b></li>'
+      +   '</ul></section>'
+      +   '<section class="fund-box out"><h4>💸 나갈 돈<b>' + eokText(n.outMin) + ' ~ ' + eokText(n.outMax) + '</b></h4>'
+      +   '<table class="fund-t"><tbody>' + rows + '</tbody></table></section>'
+      + '</div>'
+      + '<div class="fund-sum">'
+      +   '<dl>'
+      +     '<dt>입주 안내문 6건 합계 (분양대금·옵션·중도금 원금·기타입주비용·대납이자·관리비예치금)</dt><dd>' + won(n.trust) + '</dd>'
+      +     '<dt>취득세·등기비 등 (예상)</dt><dd>약 ' + manwon(FUND.tax) + '</dd>'
+      +     '<dt>중도금 12월 추가이자 (12/1~17일분)</dt><dd>약 ' + manwon(FUND.intMin) + ' ~ ' + manwon(FUND.intMax) + '</dd>'
+      +     '<dt>당일 가구 550만 · 이사 170만</dt><dd>' + won(n.dayPay) + '</dd>'
+      +   '</dl>'
+      +   '<div class="net"><span>당일 자금 수지 · 11억 − 입주자금 − 당일 가구·이사</span><b>약 ' + manwon(netRound) + ' 여유</b></div>'
+      +   '<p class="fund-note">계산: 1,100,000,000 − (970,730,879 + 취득세 25,000,000 + 12월 이자 650,000~1,100,000) − 7,200,000 = <b>' + won(n.netMin) + ' ~ ' + won(n.netMax) + '</b>. 중도금 12월 추가이자는 11/20 납입 이후 정산 확인이 필요하고, 12/1부터 발생분은 새마을금고에 직접 납부합니다. 취득세·등기비는 신고 때 확정됩니다.</p>'
+      + '</div>'
+      + '</div>';
+  }
+
   function renderMoneyView(){
     const mv = document.getElementById("moneyView");
     if(!mv) return;
@@ -1569,11 +1809,12 @@
     const head = '<div class="mv-head">'
       + '<div><h2 class="t">💰 비용·결제 내역</h2>'
       + '<p class="s">금액이 적힌 항목 <b>' + list.length + '개</b>를 큰 금액부터 모았습니다 · 전체 ' + state.items.length + '개 중</p></div>'
-      + '<div class="mv-badge">합계<b>' + wonOrZero(total) + '</b></div>'
+      + '<div class="mv-badge">시공·이사 합계<b>' + wonOrZero(total) + '</b></div>'
       + '</div>';
+    const fund = fundPlanHTML();
 
     if(!list.length){
-      mv.innerHTML = head + '<div class="mv-empty">아직 금액이 적힌 항목이 없습니다.<br>항목의 ✎ 를 눌러 <b>낸 돈</b>·<b>앞으로 낼 돈</b>을 적으면 여기에 모입니다.</div>';
+      mv.innerHTML = head + fund + '<div class="mv-empty">아직 금액이 적힌 항목이 없습니다.<br>항목의 ✎ 를 눌러 <b>낸 돈</b>·<b>앞으로 낼 돈</b>을 적으면 여기에 모입니다.</div>';
       return;
     }
 
@@ -1596,7 +1837,8 @@
         + '</tr>';
     });
 
-    mv.innerHTML = head
+    mv.innerHTML = head + fund
+      + '<div class="mv-sub-h">🛒 시공·가구·가전·이사 비용 <span>— 12/17 입주 자금과 별도 합계</span></div>'
       + '<table class="mv"><thead><tr>'
       + '<th class="l">항목 · 업체</th><th>낸 돈</th><th>앞으로 낼 돈</th><th>총액</th><th class="l">상태</th><th></th>'
       + '</tr></thead><tbody>' + rows + '</tbody>'
@@ -1608,7 +1850,7 @@
       + '<td class="l c-st"></td><td class="c-act"></td>'
       + '</tr></tfoot></table>'
       + '<div class="mv-note">'
-      + '<p class="warnline">🏦 잔금대출 약 9억 원 · 중도금 이자 · 조합 잔금은 금액이 미정이라 이 합계에서 빼고 메모로만 관리합니다.</p>'
+      + '<p class="warnline">🏦 분양대금·중도금 상환·기타 입주비용·주담대 9억은 위 「12/17 입주 자금 계획」에서 따로 계산합니다 — 이 표에는 넣지 않았습니다.</p>'
       + '<p>합계 = 낸 돈 ' + wonOrZero(paid) + ' + 앞으로 낼 돈 ' + wonOrZero(remain) + ' = <b>' + wonOrZero(total) + '</b> · 금액이 없는 항목 ' + noMoney + '개는 여기에 나오지 않습니다.</p>'
       + '<p>💡 이 붙은 항목은 제가 미리 넣어 둔 제안입니다. 실제로 진행할지 확인해 주세요.</p>'
       + '<p><button class="btn" type="button" data-act="backlist">← 체크리스트로 돌아가기</button></p>'
