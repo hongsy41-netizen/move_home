@@ -469,7 +469,7 @@
   .tl-key .kc{border:1px solid var(--line);border-radius:13px;padding:11px 13px;background:#fff;min-width:0}
   .tl-key .kc .d{font-size:13px;font-weight:700;color:var(--ink-3);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
   .tl-key .kc .d em{font-style:normal;font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 6px;background:#f3f5fa;border:1px solid var(--line);color:var(--ink-3)}
-  .tl-key .kc .t{font-size:15px;font-weight:800;margin-top:5px;letter-spacing:-.01em}
+  .tl-key .kc .t{font-size:15px;font-weight:800;margin-top:5px;letter-spacing:-.01em;word-break:keep-all;line-height:1.3}
   .tl-key .kc .m{font-size:12.5px;color:var(--ink-3);margin-top:2px;line-height:1.45;word-break:keep-all}
   .tl-key .kc.off{border-style:dashed;background:#fafbff}
   .tl-key .kc.off .t{color:var(--ink-3)}
@@ -1673,7 +1673,7 @@
     { due:"2026-12-15", t:"일정 없음", m:"비워 둔 날", empty:true },
     { due:"2026-12-16", t:"입주청소", m:"총 40만 원 · 12/16 시공" },
     { due:"2026-12-17", t:"이사 · 가구 오전", m:"자금 정산 → 가구 → 15:00 이삿짐", move:true },
-    { due:"2026-12-18", t:"인터넷 오전 · 무타공 TV 오후", m:"이사·TV배송 후 시공" }
+    { due:"2026-12-18", t:"인터넷 · 무타공 TV", m:"오전 인터넷 연결 → 오후 TV 시공" }
   ];
   /* 일정을 일부러 비워 둔 날 — 항목이 없어도 카드로 보여 준다 */
   const TL_EMPTY_DAYS = {
