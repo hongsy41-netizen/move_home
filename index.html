@@ -436,6 +436,16 @@
   table.fund-t td.nm em{display:block;font-style:normal;font-size:11.5px;color:var(--ink-3);font-weight:600;margin-top:1px}
   table.fund-t td.amt{text-align:right;white-space:nowrap;font-weight:700;color:var(--ink-2);font-size:13.5px}
   table.fund-t tr.est td.amt{color:#b45309;font-weight:600}
+  table.fund-t td.nm span.src{
+    display:block;margin-top:3px;padding:2px 6px;border:1px solid #e7ebf6;border-radius:6px;
+    background:#f7f9fd;font-size:11px;font-weight:600;color:#6d7896;line-height:1.45;
+    word-break:keep-all;overflow-wrap:anywhere;
+  }
+  .fund-box ul li span i.src{
+    display:block;margin-top:2px;font-style:normal;font-size:11px;font-weight:600;
+    color:#6d8879;line-height:1.45;word-break:keep-all;overflow-wrap:anywhere;
+  }
+  .fund-src-key{margin:9px 0 0;font-size:11px;color:var(--ink-3);line-height:1.5;word-break:keep-all}
   .fund-sum{margin-top:12px;border:1px solid #dfe5fb;border-radius:14px;background:linear-gradient(140deg,#ffffff,#eef2ff);padding:13px 16px}
   .fund-sum dl{display:grid;grid-template-columns:1fr auto;gap:5px 14px;margin:0;font-size:13.5px;align-items:baseline}
   .fund-sum dt{color:var(--ink-2);font-weight:600;word-break:keep-all}
@@ -878,15 +888,28 @@
     tax: 25000000,        /* 취득세·등기비 등 (예상) */
     intMin: 650000,       /* 중도금 12월 추가이자 (12/1~17일분) */
     intMax: 1100000,      /* 11/20 납입 이후 정산 기준 */
+    inflow: [
+      { t:"본동삼성래미안 전세 보증금", k:"deposit", src:"💬 직접 입력 · 본동삼성래미안 12/17 수령" },
+      { t:"주택담보(잔금)대출 (예정)",  k:"loan",    src:"💬 직접 입력 · 은행 미정" }
+    ],
+    /* 각 항목의 출처 — 서류명과 항목 번호만 적는다(서류 원본은 공개 저장소에 올리지 않음) */
     out: [
-      { t:"분양대금",            where:"현대건설",                  amt:465130000 },
-      { t:"옵션대금 잔금 (80%)",  where:"현대건설",                  amt:8432000 },
-      { t:"중도금대출 원금",      where:"상도중앙새마을금고 · 3.86%",   amt:383910000 },
-      { t:"중도금 12월 추가이자", where:"상도중앙새마을금고",           min:650000, max:1100000, est:true },
-      { t:"기타 입주비용",       where:"무궁화신탁",                amt:54810000 },
-      { t:"중도금 대납 이자 (11/30 기준)", where:"무궁화신탁",        amt:57834879 },
-      { t:"관리비예치금",        where:"관리사무소",                amt:614000 },
-      { t:"취득세·등기비 등 (예상)", where:"구청·법무사",             amt:25000000, est:true }
+      { t:"분양대금",            where:"현대건설",                  amt:465130000,
+        src:"📄 분양금 납부 안내서(26.12.01 기준) #1" },
+      { t:"옵션대금 잔금 (80%)",  where:"현대건설",                  amt:8432000,
+        src:"📄 분양금 납부 안내서 #3 · 변경신고서 선택비용 1,054만 중 잔금 80%" },
+      { t:"중도금대출 원금",      where:"상도중앙새마을금고 · 3.86%",   amt:383910000,
+        src:"📄 조합 정산표 #5 · 📱 대출 앱(MG새마을금고 연 3.86%)" },
+      { t:"중도금 12월 추가이자", where:"상도중앙새마을금고",           min:650000, max:1100000, est:true,
+        src:"📄 납부 안내서 #5 유의사항(12/1~ 본인 납부) · 연 3.86% 일할계산" },
+      { t:"기타 입주비용",       where:"무궁화신탁",                amt:54810000,
+        src:"📄 납부 안내서 #4 · 조합 정산표 #2(개별분담금 5,320만 + 발코니부가세 161만)" },
+      { t:"중도금 대납 이자 (11/30 기준)", where:"무궁화신탁",        amt:57834879,
+        src:"📄 납부 안내서 #5(금리변동 반영 · 정산표 #2 5,768만 갱신)" },
+      { t:"관리비예치금",        where:"관리사무소",                amt:614000,
+        src:"📄 분양금 납부 안내서 #6" },
+      { t:"취득세·등기비 등 (예상)", where:"구청·법무사",             amt:25000000, est:true,
+        src:"📄 조합 정산표 #5 하단 ※ 비고(\"취득세·관리비선수금 등 약 2,500만 예상\")" }
     ],
     day: [
       { t:"가구 잔금 (12/17 오전 배송·설치)", amt:5500000 },
@@ -1809,7 +1832,8 @@
                         : (est ? "약 " + manwon(o.amt) : won(o.amt));
       return '<tr' + (est ? ' class="est"' : '') + '>'
         + '<td class="n">' + (i+1) + '</td>'
-        + '<td class="nm">' + esc(o.t) + (o.where ? '<em>' + esc(o.where) + '</em>' : '') + '</td>'
+        + '<td class="nm">' + esc(o.t) + (o.where ? '<em>' + esc(o.where) + '</em>' : '')
+        +   (o.src ? '<span class="src">' + esc(o.src) + '</span>' : '') + '</td>'
         + '<td class="amt">' + val + '</td></tr>';
     }).join("");
     const netRound = Math.round((n.netMin + n.netMax)/2/10000)*10000;
@@ -1828,11 +1852,14 @@
       + '</div>'
       + '<div class="fund-cols">'
       +   '<section class="fund-box in"><h4>💵 들어올 돈<b>' + won(n.inflow) + '</b></h4><ul>'
-      +     '<li><span>본동삼성래미안 전세 보증금</span><b>+' + won(FUND.deposit) + '</b></li>'
-      +     '<li><span>주택담보(잔금)대출 (예정)</span><b>+' + won(FUND.loan) + '</b></li>'
+      +     FUND.inflow.map(function(f){
+              return '<li><span>' + esc(f.t) + '<i class="src">' + esc(f.src) + '</i></span>'
+                + '<b>+' + won(FUND[f.k]) + '</b></li>';
+            }).join("")
       +   '</ul></section>'
       +   '<section class="fund-box out"><h4>💸 나갈 돈<b>' + eokText(n.outMin) + ' ~ ' + eokText(n.outMax) + '</b></h4>'
-      +   '<table class="fund-t"><tbody>' + rows + '</tbody></table></section>'
+      +   '<table class="fund-t"><tbody>' + rows + '</tbody></table>'
+      +   '<p class="fund-src-key">출처 — 📄 받으신 안내서·정산표(문서명·항목 번호) · 📱 대출 앱 · 💬 직접 입력</p></section>'
       + '</div>'
       + '<div class="fund-sum">'
       +   '<dl>'
